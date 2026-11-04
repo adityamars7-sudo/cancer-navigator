@@ -881,6 +881,34 @@ html[data-quiet="1"]{--hp-a:#3C7AD6; --hp-b:#5590E4; --hp-sh:10,22,40;
 
 .hp-foot{position:relative; margin:12px 3px 1px; font-size:calc(10.6px * var(--step)); color:var(--ink3); line-height:1.5}
 
+/* Your situation: four numbered parts at the head of the advisory tab */
+.sit{margin:18px 0 26px; padding:22px 24px 18px; border-radius:var(--r2, 16px); background:var(--paper);
+  box-shadow:var(--shadow-s); display:flex; flex-direction:column; gap:14px}
+.sit-h{padding-bottom:12px; border-bottom:1px solid var(--line)}
+.sit-k{margin:0; font-family:var(--head); font-size:calc(19px * var(--step)); font-weight:740; color:var(--ink)}
+.sit-d{margin:4px 0 0; font-size:calc(12.2px * var(--step)); color:var(--ink3); line-height:1.5}
+.sit-p{display:flex; flex-direction:column; gap:7px}
+.sit-t{display:flex; align-items:center; gap:10px; margin:0; font-size:calc(14.4px * var(--step)); font-weight:720; color:var(--ink)}
+.sit-n{flex:0 0 26px; height:26px; border-radius:var(--ico-r, 8px); display:flex; align-items:center; justify-content:center;
+  background:var(--brand-t); color:var(--brand-ink); font-size:calc(12.4px * var(--step)); font-weight:760}
+.sit-p > p,.sit-p li{font-size:calc(13.2px * var(--step)); color:var(--ink2); line-height:1.55}
+.sit-p > p{margin:0 0 0 36px}
+.sit-l,.sit-q{margin:0 0 0 36px; padding-left:18px; display:flex; flex-direction:column; gap:4px}
+.sit-l b{color:var(--ink); font-weight:650}
+.sit-o li span{display:block; color:var(--ink3); font-size:calc(12.2px * var(--step))}
+.sit-p > .sit-s{margin-top:4px; font-size:calc(10.8px * var(--step)); font-weight:740; letter-spacing:.05em;
+  text-transform:uppercase; color:var(--ink3)}
+.sit-p > .sit-next{font-size:calc(15px * var(--step)); font-weight:680; color:var(--ink); line-height:1.45;
+  padding:11px 14px; border-radius:12px; background:var(--sage-w, var(--sunk))}
+.sit-p > .sit-m{font-size:calc(12.2px * var(--step)); color:var(--ink3)}
+.sit-keep{margin-left:36px; align-self:flex-start; border:1px solid var(--line); background:var(--bg); cursor:pointer;
+  border-radius:999px; padding:6px 13px; font:inherit; font-size:calc(11.8px * var(--step)); font-weight:650; color:var(--brand-ink)}
+.sit-keep:hover{border-color:var(--brand)}
+.sit-f{margin:4px 0 0; padding-top:12px; border-top:1px solid var(--line); font-size:calc(11.4px * var(--step)); color:var(--ink3); line-height:1.5}
+.sit-act{margin:0}
+.sit-below{margin:6px 0 10px; font-family:var(--head); font-size:calc(15px * var(--step)); color:var(--ink2)}
+@media(max-width:700px){ .sit{padding:16px 15px 14px} .sit-p > p,.sit-l,.sit-q,.sit-keep{margin-left:0} }
+
 /* The trainer's own page for this diagnosis. Interactive things stay teal. */
 .trn{display:flex; gap:12px; align-items:flex-start; padding:15px 17px; border-radius:var(--r2, 14px);
   background:var(--paper); box-shadow:var(--shadow-s)}
@@ -1830,6 +1858,13 @@ html[data-quiet="1"] .toast{background:#33333B; color:var(--ink)}
 
 @media print{
   .hdr,.lt,.compose,.rt,.toast,.scrim,.chips,.cq{display:none !important}
+  /* "Print my situation": the four parts alone, one page for an appointment */
+  body.print-sit #paneInputs{display:none !important}
+  body.print-sit #paneAdvisory{display:block !important}
+  body.print-sit #advBody > :not(.sit){display:none !important}
+  .sit{box-shadow:none !important; border:1px solid #bbb; break-inside:avoid}
+  .sit-p{break-inside:avoid}
+  .sit-act,.sit-keep{display:none !important}
   body{overflow:visible} .body{display:block; height:auto}
   .chat{overflow:visible; padding:0}
 }
@@ -6342,34 +6377,173 @@ var PLATES = {
   }
 
   /* ---------------- advisory and summary ---------------- */
+  /* ---- Your situation ------------------------------------------------
+     Item 2 of BACKLOG.md. The four parts the trainer's own patient report
+     is built around, made from what this person has told the page and
+     nothing else: where you are, what is still open, the one next step, and
+     the questions to take in. It prints on its own as one page.
+
+     The register is the trainer's: a result that is not back gets no
+     guess, "lining the options up before then would be guessing", and the
+     next step is about the work-up and the conversation, never a treatment.
+     Nothing in it counts how much is left. */
+  function sitData() {
+    var c = S.cancer;
+    var gates = FIELDS.filter(function (f) { return f.badge === 'gate'; });
+    /* every gate with no value, waved ones included: this reports the state
+       of the work-up, not of the conversation (see "Before you move on") */
+    /* the recurrence gates only once recurrence is in the picture: listing
+       'recurrence pattern' as open to someone told a few days ago is a fear
+       nobody asked for, and it is not open, it simply does not apply */
+    var w0 = has('when') ? S.v.when : null;
+    var recur = w0 === 'back' || FIELDS.some(function (f) { return f.g === 'recur' && has(f.id); });
+    var open = c && c.full ? gates.filter(function (f) { return !has(f.id) && (f.g !== 'recur' || recur); }) : [];
+    var known = [];
+    STEPS.forEach(function (st) {
+      st.ids.forEach(function (id) {
+        if (!has(id)) { return; }
+        var f = FIELD(id); if (f.badge !== 'gate' && f.badge !== 'lever') { return; }
+        var lb = label(f);
+        if (/^(not |no |still |unknown|pending|indeterminate)/i.test(lb) || S.v[id] === 'unknown') { return; }
+        known.push({ k: cap(f.tech), v: lb });
+      });
+    });
+    var w = has('when') ? byId(WHEN, S.v.when) : null;
+    var next;
+    if (!c) {
+      next = { t: 'Ask your team for the diagnosis in writing, exactly as the pathology report names it.',
+        why: 'Everything after this hangs on its exact name, and a written name is something you can look up and bring back.' };
+    } else if (w && w.id === 'today') {
+      next = { t: 'Nothing has to be decided this week. When you are ready, ask for a copy of the pathology report.',
+        why: 'You said you have only just been told. The report is the one document every later conversation starts from.' };
+    } else if (open.length) {
+      next = { t: 'Ask your team when the ' + open[0].tech + ' result will be back, and what is waiting on it.',
+        why: 'It is one of the results the options hang on, and it settles ' + open[0].unlock + '.' };
+    } else if (!c.full && trainerUrl(c)) {
+      next = { t: 'Open the trainer’s page for ' + c.n.replace(/,.*$/, '') + ' with your own results beside you, and bring what it raises to your next appointment.',
+        why: 'This page carries the general framework for this diagnosis. The detail, cited and dated, is on that page.' };
+    } else if (!has('priority')) {
+      next = { t: 'Before the next appointment, decide what matters most to you, and say it first.',
+        why: 'No result can tell anyone this, and two people with the same report choose differently because of it.' };
+    } else {
+      next = { t: 'Take these questions to your next appointment.',
+        why: 'The results the options hang on are recorded, so the conversation can be a specific one.' };
+    }
+    var asks = open.slice(0, 4).map(function (f) {
+      return 'Has the ' + f.tech + ' result come back? If not, when will it, and what is waiting on it?';
+    }).filter(function (q) { return S.qs.indexOf(q) === -1; });
+    return { c: c, w: w, open: open, known: known, next: next, asks: asks };
+  }
+  function situationNode() {
+    var d = sitData(), c = d.c;
+    var box = el('section', 'sit');
+    box.setAttribute('aria-label', 'Your situation');
+    var hd = el('div', 'sit-h');
+    hd.appendChild(el('p', 'sit-k', 'Your situation'));
+    hd.appendChild(el('p', 'sit-d', 'Put together on ' + new Date().toLocaleDateString(undefined, { dateStyle: 'long' })
+      + ' from what you told this page. It is information to take to your care team, not a plan.'));
+    box.appendChild(hd);
+    function part(n, title) {
+      var p = el('div', 'sit-p');
+      var t = el('h3', 'sit-t');
+      t.appendChild(el('span', 'sit-n', String(n)));
+      t.appendChild(document.createTextNode(title));
+      p.appendChild(t); box.appendChild(p); return p;
+    }
+
+    var p1 = part(1, 'Where you are');
+    var ul = el('ul', 'sit-l');
+    function li(k, v) { var x = el('li'); x.appendChild(el('b', null, k + ': ')); x.appendChild(document.createTextNode(v)); ul.appendChild(x); }
+    if (has('who')) { li('Who this is for', label(FIELD('who'))); }
+    li('The diagnosis', c ? c.n + (c.q ? ', ' + c.q.toLowerCase() : '') : 'not named yet');
+    if (d.w) { li('Where things are', d.w.t); }
+    if (S.intent) { li('What you came for', S.intent.t); }
+    if (has('priority')) { li('What matters most to you', label(FIELD('priority'))); }
+    p1.appendChild(ul);
+    if (d.known.length) {
+      p1.appendChild(el('p', 'sit-s', 'Results you recorded'));
+      var kl = el('ul', 'sit-l sit-r');
+      d.known.slice(0, 6).forEach(function (r) { var x = el('li'); x.appendChild(el('b', null, r.k + ': ')); x.appendChild(document.createTextNode(r.v)); kl.appendChild(x); });
+      p1.appendChild(kl);
+      if (d.known.length > 6) { p1.appendChild(el('p', 'sit-m', 'The rest are under "Everything you recorded", below.')); }
+    }
+
+    var p2 = part(2, 'What is still open');
+    if (!c) {
+      p2.appendChild(el('p', null, 'Almost everything, which is normal this early. The first thing that settles anything is the diagnosis written on the pathology report.'));
+    } else if (!c.full) {
+      var np = el('p', null, 'This page only knows which results the options hang on for glioblastoma. For ' + c.n + ', ');
+      if (trainerUrl(c)) {
+        np.appendChild(document.createTextNode('the trainer’s page lists the ones that matter: '));
+        np.appendChild(trainerLink(c, 'open the full page'));
+        np.appendChild(document.createTextNode('.'));
+      } else { np.appendChild(document.createTextNode('ask your team which results the choices depend on.')); }
+      p2.appendChild(np);
+    } else if (d.open.length) {
+      p2.appendChild(el('p', null, 'These are the results the options hang on. Until they are back, lining the options up against each other would be guessing, for this page and for anyone else.'));
+      var ol = el('ul', 'sit-l sit-o');
+      d.open.forEach(function (f) {
+        var x = el('li');
+        x.appendChild(el('b', null, cap(f.tech)));
+        x.appendChild(el('span', null, 'It settles ' + f.unlock + '.'));
+        ol.appendChild(x);
+      });
+      p2.appendChild(ol);
+    } else {
+      p2.appendChild(el('p', null, 'The results the options hang on are all recorded. That does not make this a plan. It means the next conversation can be a specific one rather than a general one.'));
+    }
+
+    var p3 = part(3, 'The next step');
+    p3.appendChild(el('p', 'sit-next', d.next.t));
+    p3.appendChild(el('p', 'sit-m', d.next.why));
+
+    var p4 = part(4, 'Questions for your care team');
+    if (!S.qs.length && !d.asks.length) {
+      p4.appendChild(el('p', null, 'Nothing written down yet. Ask anything in the chat, or read anything in the knowledge base, and the questions it raises land here.'));
+    }
+    if (S.qs.length) {
+      p4.appendChild(el('p', 'sit-s', 'You wrote down'));
+      var q1 = el('ol', 'sit-q'); S.qs.forEach(function (q) { q1.appendChild(el('li', null, q)); }); p4.appendChild(q1);
+    }
+    if (d.asks.length) {
+      p4.appendChild(el('p', 'sit-s', 'From what is still open'));
+      var q2 = el('ol', 'sit-q'); d.asks.forEach(function (q) { q2.appendChild(el('li', null, q)); }); p4.appendChild(q2);
+      var keepB = el('button', 'sit-keep', 'Keep these on my list'); keepB.type = 'button';
+      keepB.addEventListener('click', function () {
+        d.asks.forEach(function (q) { if (S.qs.indexOf(q) === -1) { S.qs.push(q); } });
+        toast('Kept on your list.'); paintAll(); paintAdvisory();
+      });
+      p4.appendChild(keepB);
+    }
+
+    box.appendChild(el('p', 'sit-f', 'Education only. Not medical advice, and not a substitute for your care team. Any decision belongs to you and the people treating you.'));
+    var row = el('div', 'kbtabs advrow sit-act');
+    [['Print my situation', printSituation], ['Copy as text', copyAll]].forEach(function (x) {
+      var b = el('button', null, x[0]); b.type = 'button'; b.addEventListener('click', x[1]); row.appendChild(b);
+    });
+    box.appendChild(row);
+    return box;
+  }
+  /* prints the four parts alone, as one page to take into an appointment */
+  function printSituation() {
+    document.body.classList.add('print-sit');
+    var done = function () { document.body.classList.remove('print-sit'); window.removeEventListener('afterprint', done); };
+    window.addEventListener('afterprint', done);
+    window.print();
+    window.setTimeout(done, 1500);
+  }
   function paintAdvisory() {
     var h = $('#advBody'); h.textContent = '';
     h.appendChild(el('h1', null, 'Advisory and summary'));
-    var gates = FIELDS.filter(function (f) { return f.badge === 'gate'; });
-    var openG = gates.filter(function (f) { return !has(f.id); });
     h.appendChild(el('p', 'lede', S.cancer
-      ? S.cancer.n + (S.cancer.q ? ', ' + S.cancer.q.toLowerCase() : '') + '. ' +
-        totalDone() + ' of ' + totalFields() + ' answers recorded, ' + Object.keys(S.read).length +
-        (Object.keys(S.read).length === 1 ? ' thing read, ' : ' things read, ') +
-        S.qs.length + ' question' + (S.qs.length === 1 ? '' : 's') + ' written down for your care team.'
+      ? S.cancer.n + (S.cancer.q ? ', ' + S.cancer.q.toLowerCase() : '') + '. What follows is made from what you have told this page, and it changes as you do.'
       : 'No diagnosis named yet. What follows is what holds whoever you are and whatever the diagnosis turns out to be.'));
+    h.appendChild(situationNode());
 
+    h.appendChild(el('h2', 'sit-below', 'The detail'));
     var cards = el('div', 'cards');
-
-    var c1 = el('div', 'card');
-    c1.appendChild(el('h3', null, openG.length ? 'What is still blocking a clear answer' : 'The gating results are all in'));
-    if (openG.length) {
-      c1.appendChild(el('p', null, 'These are the results that have to be back before anyone, this page included, can line the options up against each other honestly.'));
-      var ul = el('ul');
-      openG.forEach(function (f) { ul.appendChild(el('li', null, f.tech + ' · ' + (f.plain || f.t))); });
-      c1.appendChild(ul);
-    } else {
-      c1.appendChild(el('p', null, 'Every gating result is recorded. That does not make this page a treatment plan, and it is not one. It means the conversation with your team can be a specific one rather than a general one.'));
-    }
-    cards.appendChild(c1);
-
     var c2 = el('div', 'card');
-    c2.appendChild(el('h3', null, 'What you have recorded'));
+    c2.appendChild(el('h3', null, 'Everything you recorded'));
     if (!totalDone()) { c2.appendChild(el('p', null, 'Nothing yet. Every answer in the chat works without any of this, so there is no hurry.')); }
     else {
       var ol = el('ul'), known = 0, unk = 0;
@@ -6380,34 +6554,15 @@ var PLATES = {
           /* an answer of "we do not know" is a real answer, and it is not data */
           var isUnk = /^(not |no |still |unknown|pending|indeterminate)/i.test(lb) || S.v[id] === 'unknown';
           if (isUnk) { unk++; } else { known++; }
-          var li = el('li', isUnk ? 'unk' : null, cap(f.tech) + ': ' + lb);
-          ol.appendChild(li);
+          ol.appendChild(el('li', isUnk ? 'unk' : null, cap(f.tech) + ': ' + lb));
         });
       });
-      var sub = el('p', 'subline');
-      sub.textContent = known + (known === 1 ? ' answer carries a result. ' : ' answers carry a result. ') +
-        (unk ? unk + (unk === 1 ? ' was answered as not known or not tested, which is useful to your team in its own right, and is shown in grey.' : ' were answered as not known or not tested, which is useful to your team in its own right, and are shown in grey.') : '');
-      c2.appendChild(sub);
+      if (unk) {
+        c2.appendChild(el('p', 'subline', 'Answers given as not known or not tested are shown in grey. They are useful to your team in their own right.'));
+      }
       c2.appendChild(ol);
     }
     cards.appendChild(c2);
-
-    var c3 = el('div', 'card');
-    c3.appendChild(el('h3', null, 'Questions for your care team'));
-    if (!S.qs.length) { c3.appendChild(el('p', null, 'Ask anything in the chat, or read anything in the knowledge base, and the questions it raises land here in words you can read out.')); }
-    else { var ol2 = el('ol'); S.qs.forEach(function (q) { ol2.appendChild(el('li', null, q)); }); c3.appendChild(ol2); }
-    cards.appendChild(c3);
-
-    var c4 = el('div', 'card');
-    c4.appendChild(el('h3', null, 'What matters to you'));
-    if (has('priority')) {
-      c4.appendChild(el('p', null, 'You said: ' + label(FIELD('priority')) + '.'));
-      c4.appendChild(el('p', null, 'No result can tell anyone this, and two people with identical reports choose differently because of it. It belongs in the first five minutes of the next conversation, not the last.'));
-    } else {
-      c4.appendChild(el('p', null, 'Step 12 has not been answered. It is the one part of this that no scan and no report can supply, and it changes more about what a sensible plan looks like than most of the results do.'));
-    }
-    cards.appendChild(c4);
-
     var notes = Object.keys(S.notes).filter(function (k) { return (S.notes[k] || '').trim(); });
     if (notes.length) {
       var c5 = el('div', 'card');
@@ -6434,21 +6589,31 @@ var PLATES = {
       h.appendChild(f2);
     }
     var row = el('div', 'kbtabs advrow');
-    [['Print this', function () { window.print(); }],
-     ['Copy as text', copyAll],
+    [['Print all of this', function () { window.print(); }],
      ['Back to the questions', function () { setTab('inputs'); }]].forEach(function (x) {
       var b = el('button', null, x[0]); b.type = 'button'; b.addEventListener('click', x[1]); row.appendChild(b);
     });
     h.appendChild(row);
   }
+  /* the four parts as plain text, then everything recorded */
   function copyAll() {
-    var L = ['My notes' + (S.cancer ? ' · ' + S.cancer.n : ''), ''];
-    L.push('What I recorded', '');
-    if (!totalDone()) { L.push('(nothing yet)'); }
-    STEPS.forEach(function (s) { s.ids.forEach(function (id) { if (has(id)) { L.push('- ' + FIELD(id).tech + ': ' + label(FIELD(id))); } }); });
-    L.push('', 'Questions for my care team', '');
-    if (!S.qs.length) { L.push('(none yet)'); }
-    S.qs.forEach(function (q, i) { L.push((i + 1) + '. ' + q); });
+    var d = sitData(), c = d.c;
+    var L = ['My situation' + (c ? ' · ' + c.n : ''), 'Put together on ' + new Date().toLocaleDateString() + ' from what I told the page.', ''];
+    L.push('1. Where I am');
+    if (has('who')) { L.push('- Who this is for: ' + label(FIELD('who'))); }
+    L.push('- The diagnosis: ' + (c ? c.n + (c.q ? ', ' + c.q.toLowerCase() : '') : 'not named yet'));
+    if (d.w) { L.push('- Where things are: ' + d.w.t); }
+    if (has('priority')) { L.push('- What matters most to me: ' + label(FIELD('priority'))); }
+    d.known.forEach(function (r) { L.push('- ' + r.k + ': ' + r.v); });
+    L.push('', '2. What is still open');
+    if (!c) { L.push('- The diagnosis, as the pathology report names it.'); }
+    else if (!c.full) { L.push('- The results that matter for ' + c.n + (trainerUrl(c) ? ': see ' + trainerUrl(c) : '') + '.'); }
+    else if (!d.open.length) { L.push('- The results the options hang on are all recorded.'); }
+    d.open.forEach(function (f) { L.push('- ' + cap(f.tech) + '. It settles ' + f.unlock + '.'); });
+    L.push('', '3. The next step', '- ' + d.next.t);
+    L.push('', '4. Questions for my care team');
+    if (!S.qs.length && !d.asks.length) { L.push('(none yet)'); }
+    S.qs.concat(d.asks).forEach(function (q, i) { L.push((i + 1) + '. ' + q); });
     Object.keys(S.notes).forEach(function (k) { if ((S.notes[k] || '').trim()) { L.push('', 'Note on ' + STEPS[Number(k) - 1].t + ': ' + S.notes[k]); } });
     L.push('', 'Education only. Not medical advice, and not a substitute for the care team.');
     var t = L.join('\n');
