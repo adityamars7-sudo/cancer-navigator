@@ -881,6 +881,23 @@ html[data-quiet="1"]{--hp-a:#3C7AD6; --hp-b:#5590E4; --hp-sh:10,22,40;
 
 .hp-foot{position:relative; margin:12px 3px 1px; font-size:calc(10.6px * var(--step)); color:var(--ink3); line-height:1.5}
 
+/* The trainer's own page for this diagnosis. Interactive things stay teal. */
+.trn{display:flex; gap:12px; align-items:flex-start; padding:15px 17px; border-radius:var(--r2, 14px);
+  background:var(--paper); box-shadow:var(--shadow-s)}
+.trn-ic{flex:0 0 34px; height:34px; border-radius:var(--ico-r, 10px); display:flex; align-items:center;
+  justify-content:center; background:var(--brand-t); color:var(--brand-ink)}
+.trn-t{min-width:0; display:flex; flex-direction:column; gap:5px}
+.trn-t b{font-size:calc(13.2px * var(--step)); color:var(--ink); line-height:1.35}
+.trn-t span{font-size:calc(12px * var(--step)); color:var(--ink2); line-height:1.5}
+.trn-t .trn-how{color:var(--ink3); font-size:calc(11.3px * var(--step))}
+.trn-go{align-self:flex-start; margin-top:4px; display:inline-flex; align-items:center; gap:7px;
+  padding:9px 15px; border-radius:999px; background-color:var(--fill); background-image:var(--sheen);
+  color:var(--on-fill); font-size:calc(12.4px * var(--step)); font-weight:700; text-decoration:none;
+  transition:transform .16s ease, box-shadow .16s ease}
+.trn-go:hover{transform:translateY(-1px); box-shadow:var(--shadow-lift, var(--shadow-s))}
+.trn-a{color:var(--brand-ink); font-weight:650; text-underline-offset:3px}
+@media(prefers-reduced-motion:reduce){ .trn-go{transition:none} .trn-go:hover{transform:none} }
+
 /* The request flow lives in the same card: three steps, then My requests.
    It keeps the panel's own blue in every palette, like the rest of it. The
    body scrolls on its own so the card never outgrows the window. */
@@ -3299,6 +3316,35 @@ html[data-quiet="1"] .toast{background:#33333B; color:var(--ink)}
   TWINS.gbm[1].url = 'https://cancer.guidedcare.ai/gbm-idh-wildtype.html';
 
   /* =====================================================================
+     THE TRAINER'S OWN PAGE FOR EACH DIAGNOSIS. Read off the trainer's home
+     page on 2026-11-04: it covers the same 61 cancer types as CANCERS, one
+     page each, and every page carries a "Patient & caregiver" view beside
+     the clinician view. The view is a button on the page, not part of the
+     address, so a link can only open the page and say which view to pick.
+
+     This is what turns "general framework only" into somewhere to go: the
+     detailed layer in this page is glioblastoma's, but the trainer has a
+     cited page for all 61. It is education only, about made-up patients.
+     ===================================================================== */
+  var TRAINER_BASE = 'https://cancer.guidedcare.ai/';
+  var TRAINER = {
+    gbm: 'gbm-idh-wildtype', hnscc: 'head-neck', thyroid: 'thyroid', adrenal: 'adrenal',
+    'all-ad': 'all-adult', 'all-pd': 'all-pediatric', 'all-inf': 'all-infant', aml: 'aml', apl: 'apl',
+    cll: 'cll', cml: 'cml', hcl: 'hairy-cell', mds: 'mds', mpn: 'mpn', cmml: 'cmml', mm: 'myeloma',
+    amyloid: 'al-amyloidosis', chl: 'hodgkin', nlpbl: 'nlpbl', dlbcl: 'dlbcl', dhl: 'hgbl',
+    pmbcl: 'pmbcl', fl: 'follicular', pcfcl: 'pcfcl', pcnsl: 'cns-lymphoma', crc: 'colorectal',
+    panc: 'pancreatic', eso: 'esophageal', gastric: 'gastric', hcc: 'hcc', biliary: 'biliary',
+    anal: 'anal', appendix: 'appendiceal', gist: 'gist', ginet: 'gi-net', pnet: 'pnet',
+    sbowel: 'small-intestine', 'bc-early': 'breast-early', ibc: 'inflammatory-breast',
+    'bc-met': 'breast-metastatic', dcis: 'dcis', nsclc: 'nsclc', sclc: 'sclc', meso: 'mesothelioma',
+    thymoma: 'thymoma', prostate: 'prostate', bladder: 'bladder', rcc: 'kidney-rcc', testis: 'testicular',
+    melanoma: 'melanoma', bcc: 'skin-bcc', cscc: 'skin-scc', merkel: 'merkel', ovarian: 'ovarian',
+    endo: 'endometrial', usarc: 'uterine-sarcoma', cervical: 'cervical', sts: 'sts', osteo: 'bone-osteo',
+    ewing: 'bone-ewing', cup: 'cup'
+  };
+  function trainerUrl(c) { return c && TRAINER[c.id] ? TRAINER_BASE + TRAINER[c.id] + '.html' : null; }
+
+  /* =====================================================================
      READING A REPORT. Patterns for the results a pathology or molecular
      report actually prints, so somebody can paste theirs instead of
      answering a dozen questions one at a time.
@@ -4140,7 +4186,9 @@ var PLATES = {
     S.onb = 'intent'; paintAll(); openRight();
     var honest = c.full
       ? 'There is full detail here for this one, down to what is written on a report.'
-      : 'I should be straight with you: the detailed layer has only been built for glioblastoma so far. For this one you get the general framework, and I will keep saying so rather than let it look complete.';
+      : 'I should be straight with you: the detailed layer here has only been built for glioblastoma so far, so for this one you get the general framework.'
+        + (trainerUrl(c) ? ' The clinician trainer does have a full, cited page for ' + c.n.replace(/,.*$/, '')
+          + ', with a view for patients and caregivers. It is on the right, under "The full page for this diagnosis".' : '');
     if (S.intent) {
       /* switched diagnosis mid-way: what they came for still stands */
       S.onb = false; paintAll();
@@ -4495,7 +4543,8 @@ var PLATES = {
     me(label(f, v));
     guide([ackFor(f, v)]);
     if (f.id === 'dx' && v && !v.full) {
-      guide(['Being straight with you: the detailed layer here, the part that reads your own results back, has only been built for glioblastoma. For this one you get the general framework, and I will keep saying so rather than let it look complete.']);
+      guide(['Being straight with you: the detailed layer here, the part that reads your own results back, has only been built for glioblastoma. For this one you get the general framework.'
+        + (trainerUrl(v) ? ' The clinician trainer has a full page for it, with a view for patients and caregivers, and it is on the right.' : '')]);
     }
     advance();
     maybeOfferCase();
@@ -4686,6 +4735,40 @@ var PLATES = {
         ? 'A case like yours, ' + m.n + ' of your answers line up'
         : 'A case with the same diagnosis, written up in full');
     }
+  }
+  /* ---- The trainer's own page for this diagnosis ----------------------
+     The detailed layer here is glioblastoma's. The trainer has a cited page
+     for all 61, with a view for patients and caregivers, so every diagnosis
+     gets a way to that depth instead of a dead end labelled "general". It
+     opens in a new tab, says what it is (education only, made-up patients)
+     and which view to pick, because the view is not part of the address. */
+  function trainerLink(c, words) {
+    var a = el('a', 'trn-a', words);
+    a.href = trainerUrl(c); a.target = '_blank'; a.rel = 'noopener noreferrer';
+    return a;
+  }
+  function trainerNode() {
+    var c = S.cancer, url = trainerUrl(c);
+    if (!url) { return null; }
+    var box = sec('The full page for this diagnosis', 'book', null, 'open');
+    var w = el('div', 'trn');
+    var ic = el('span', 'trn-ic');
+    ic.innerHTML = solid('book', 16);
+    w.appendChild(ic);
+    var tx = el('div', 'trn-t');
+    tx.appendChild(el('b', null, c.n + (c.q ? ', ' + c.q.toLowerCase() : '') + ' on the clinician trainer'));
+    tx.appendChild(el('span', null, c.full
+      ? 'This page carries the detailed layer for this one. The trainer goes further, with every claim cited and dated.'
+      : 'This page gives you the general framework. The trainer has the detail for this diagnosis, with every claim cited and dated.'));
+    tx.appendChild(el('span', 'trn-how', 'At the top of that page, choose "Patient & caregiver" for the plain-language view. '
+      + 'It is education only, about made-up patients, and it is not a plan for you.'));
+    var go = trainerLink(c, 'Open the full page');
+    go.className = 'trn-go';
+    go.insertAdjacentHTML('beforeend', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>');
+    tx.appendChild(go);
+    w.appendChild(tx);
+    box.appendChild(w);
+    return box;
   }
   /* and it stays reachable on the panel rather than scrolling away */
   function caseNode() {
@@ -5744,7 +5827,8 @@ var PLATES = {
           var sp2 = el('span');
           sp2.appendChild(document.createTextNode(cc.n + (cc.q ? ' · ' + cc.q : '')));
           var sm2 = el('small'); sm2.style.cssText = 'display:block;font-weight:500;color:var(--ink3);font-size:calc(11.5px * var(--step))';
-          sm2.textContent = cc.full ? 'Full detail available' : 'General framework only';
+          sm2.textContent = cc.full ? 'Full detail available'
+            : (trainerUrl(cc) ? 'General framework here, full page on the trainer' : 'General framework only');
           sp2.appendChild(sm2); b.appendChild(sp2);
           b.addEventListener('click', function () { fromPanel(f, cc); });
           o3.appendChild(b);
@@ -6098,6 +6182,7 @@ var PLATES = {
     h.appendChild(NT);
     h.appendChild(navNode());
 
+    var tn = trainerNode(); if (tn) { h.appendChild(tn); }
     var wc = caseNode(); if (wc) { h.appendChild(wc); }
     h.appendChild(gatheredNode());
     h.appendChild(L);
@@ -6341,6 +6426,11 @@ var PLATES = {
     if (S.cancer && !S.cancer.full) {
       var f2 = el('div', 'flagx warn');
       f2.textContent = 'The detailed layer here was built for glioblastoma. For ' + S.cancer.n + ' the framework holds but nothing above is specific to that disease.';
+      if (trainerUrl(S.cancer)) {
+        f2.appendChild(document.createTextNode(' The trainer has a full page for it: '));
+        f2.appendChild(trainerLink(S.cancer, 'open the full page'));
+        f2.appendChild(document.createTextNode(', and choose "Patient & caregiver" at the top.'));
+      }
       h.appendChild(f2);
     }
     var row = el('div', 'kbtabs advrow');
@@ -7194,11 +7284,17 @@ var PLATES = {
     var box = $('#hmTwin'), rule = $('#hmdTwin');
     if (!box) { return; }
     $$('.hmi.ext', box).forEach(function (n) { n.remove(); });
-    var list = (S.cancer && typeof TWINS !== 'undefined') ? TWINS[S.cancer.id] : null;
-    box.hidden = !list; if (rule) { rule.hidden = !list; }
-    if (!list) { return; }
+    var twins = (S.cancer && typeof TWINS !== 'undefined') ? TWINS[S.cancer.id] : null;
+    var list = [];
+    if (trainerUrl(S.cancer)) {
+      list.push({ page: true, t: 'Full page for ' + S.cancer.n.replace(/,.*$/, ''),
+        sub: 'Cited and dated. Choose "Patient & caregiver" at the top.', url: trainerUrl(S.cancer) });
+    }
+    list = list.concat(twins || []);
+    box.hidden = !list.length; if (rule) { rule.hidden = !list.length; }
+    if (!list.length) { return; }
     list.forEach(function (t) {
-      var a = el('a', 'hmi ext');
+      var a = el('a', 'hmi ext' + (t.page ? ' trp' : ''));
       a.href = t.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
       a.setAttribute('role', 'menuitem');
       var tx = el('span', 'hmx');
