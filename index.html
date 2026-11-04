@@ -881,6 +881,45 @@ html[data-quiet="1"]{--hp-a:#3C7AD6; --hp-b:#5590E4; --hp-sh:10,22,40;
 
 .hp-foot{position:relative; margin:12px 3px 1px; font-size:calc(10.6px * var(--step)); color:var(--ink3); line-height:1.5}
 
+/* Research and new methods: the ladder, the source, and one card per item.
+   The rungs use the chapter hues as a quiet scale; interactive things stay teal. */
+.rs-ladder{list-style:none; margin:18px 0 20px; padding:0; display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:10px}
+.rs-ladder li{display:flex; gap:10px; align-items:flex-start; padding:13px 14px; border-radius:var(--r2, 14px);
+  background:var(--paper); box-shadow:var(--shadow-s)}
+.rs-n{flex:0 0 24px; height:24px; border-radius:var(--ico-r, 8px); display:flex; align-items:center; justify-content:center;
+  font-size:calc(12px * var(--step)); font-weight:760; background:var(--sunk2); color:var(--ink2)}
+.rs-ladder li.r3 .rs-n{background:var(--brand-t); color:var(--brand-ink)}
+.rs-lt{display:flex; flex-direction:column; gap:3px; min-width:0}
+.rs-lt b{font-size:calc(12.6px * var(--step)); color:var(--ink); line-height:1.3}
+.rs-lt span{font-size:calc(11.4px * var(--step)); color:var(--ink3); line-height:1.45}
+.rs-note{margin:0 0 14px; font-size:calc(12.6px * var(--step)); color:var(--ink2)}
+.rs-src{padding:16px 18px; border-radius:var(--r2, 14px); background:var(--paper); box-shadow:var(--shadow-s);
+  display:flex; flex-direction:column; gap:6px; margin-bottom:22px}
+.rs-src p{margin:0; font-size:calc(12.6px * var(--step)); color:var(--ink2); line-height:1.5}
+.rs-src .rs-k{font-size:calc(10.8px * var(--step)); font-weight:740; letter-spacing:.05em; text-transform:uppercase; color:var(--ink3)}
+.rs-src .rs-st b{color:var(--ink)}
+.rs-src .rs-warn{padding:9px 11px; border-radius:10px; background:var(--warm-t, var(--sunk)); color:var(--ink)}
+.rs-src .trn-go{margin-top:4px}
+.rs-group{margin-bottom:20px}
+.rs-gh{margin:0 0 10px; font-family:var(--head); font-size:calc(15px * var(--step)); color:var(--ink2)}
+.rs-card{padding:16px 18px; border-radius:var(--r2, 14px); background:var(--paper); box-shadow:var(--shadow-s); margin-bottom:10px}
+.rs-card h3{margin:8px 0 4px; font-size:calc(14.6px * var(--step)); color:var(--ink); line-height:1.35}
+.rs-card p{margin:0 0 6px; font-size:calc(13px * var(--step)); color:var(--ink2); line-height:1.55}
+.rs-card .rs-ev b{color:var(--ink)}
+.rs-meta{margin:8px 0 0; display:grid; grid-template-columns:auto 1fr; gap:4px 12px; padding-top:9px; border-top:1px solid var(--line)}
+.rs-meta dt{font-size:calc(11px * var(--step)); font-weight:700; color:var(--ink3)}
+.rs-meta dd{margin:0; font-size:calc(11.8px * var(--step)); color:var(--ink2)}
+.rs-rung{display:inline-flex; align-items:center; gap:8px; padding:4px 10px 4px 8px; border-radius:999px; background:var(--sunk)}
+.rs-dots{display:inline-flex; gap:3px}
+.rs-dots i{width:7px; height:7px; border-radius:50%; background:var(--sunk2)}
+.rs-dots i.on{background:var(--brand)}
+.rs-rt{font-size:calc(11.2px * var(--step)); font-weight:700; color:var(--ink2)}
+.rs-empty{padding:18px 20px; border-radius:var(--r2, 14px); background:var(--paper); box-shadow:var(--shadow-s)}
+.rs-empty b{display:block; font-size:calc(14px * var(--step)); color:var(--ink); margin-bottom:6px}
+.rs-empty p{margin:0; font-size:calc(12.8px * var(--step)); color:var(--ink2); line-height:1.55}
+@media(max-width:900px){ .rs-ladder{grid-template-columns:repeat(2, minmax(0, 1fr))} }
+@media(max-width:520px){ .rs-ladder{grid-template-columns:1fr} }
+
 /* how each file went, above the results read from it */
 .rd-files{margin:0 0 10px; padding:0; list-style:none; display:flex; flex-direction:column; gap:5px}
 .rd-files li{font-size:calc(12.2px * var(--step)); color:var(--ink2); line-height:1.45; padding:7px 10px;
@@ -1937,6 +1976,7 @@ html[data-quiet="1"] .toast{background:#33333B; color:var(--ink)}
       <button class="hmi" type="button" id="bSave" role="menuitem"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Coming back later</span></button>
       <i class="hmd"></i>
       <button class="hmi" type="button" id="bKb" role="menuitem"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5zM19 18v3H6.5"/></svg><span>Knowledge base</span></button>
+      <button class="hmi" type="button" id="bRes" role="menuitem"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6.5L4.8 18a2.6 2.6 0 0 0 2.2 4h10a2.6 2.6 0 0 0 2.2-4L14 9.5V3M7.5 15h9"/></svg><span>Research and new methods</span></button>
       <i class="hmd"></i>
       <div class="hmtwin" id="hmTwin" hidden>
         <p class="hmlab">On the clinician trainer <span>education only</span></p>
@@ -2018,6 +2058,7 @@ html[data-quiet="1"] .toast{background:#33333B; color:var(--ink)}
 
 <div class="pane" id="paneAdvisory" hidden><div class="wrapx" id="advBody"></div></div>
 <div class="pane" id="paneKb" hidden><div class="wrapx" id="kbBody"></div></div>
+<div class="pane" id="paneRes" hidden><div class="wrapx" id="resBody"></div></div>
 
 <div class="scrim" id="scrim"></div>
 <div class="toast" id="toast" role="status"></div>
@@ -3384,6 +3425,58 @@ html[data-quiet="1"] .toast{background:#33333B; color:var(--ink)}
     endo: 'endometrial', usarc: 'uterine-sarcoma', cervical: 'cervical', sts: 'sts', osteo: 'bone-osteo',
     ewing: 'bone-ewing', cup: 'cup'
   };
+  /* =====================================================================
+     RESEARCH AND NEW METHODS. Item 10 of BACKLOG.md, the screen first; where
+     these come from long term (a table the team writes, with a review step
+     and an expiry date) is logged in BACKLOG.md.
+
+     Today there is one source, and every item below is taken from it: the
+     AiM One Health open research dossier for one glioblastoma case, read on
+     2026-11-04. Each item carries the dossier's own grade, put on one rung
+     of RLADDER, and a plain description written here. No figure is carried:
+     the numbers live on the dossier, next to the groups they come from, and
+     its projected "best case" curve is not shown anywhere in this page.
+     ===================================================================== */
+  var RLADDER = [
+    { id: 'lab', t: 'Lab only', d: 'Studied in cells or animals. Not yet tested in people with this cancer.' },
+    { id: 'early', t: 'First human studies', d: 'Small early studies, mainly about safety and dose. Too early to know whether it helps.' },
+    /* "a trial enrolling now" was the first wording. DCVax-L has finished its
+       phase 3 trial, so "enrolling now" would be false; this rung is about
+       the evidence, and whether a trial is open is a separate fact. */
+    { id: 'trial', t: 'Tested in trials, not yet standard care', d: 'Tested in larger studies with published results, but not accepted as standard care.' },
+    { id: 'standard', t: 'Standard care', d: 'Part of accepted treatment, backed by large randomized trials.' }
+  ];
+  var RSOURCE = { t: 'Glioblastoma, DCVax-L and combination: an open research dossier',
+    by: 'AiM One Health', url: 'https://openrx.aimonehealth.com/GBM-DCVax-L-Combination.html', read: '2026-11-04',
+    note: 'Put together for one person’s tumor. It calls itself a ranked hypothesis for the team to weigh, not a treatment recommendation.' };
+  var RESEARCH = [
+    { id: 'resect', dx: ['gbm'], stage: 'standard', grade: 'Strong evidence',
+      t: 'Maximal safe surgery',
+      what: 'Surgery to take out as much of the tumor as can be removed safely.',
+      ev: 'Large studies comparing more and less complete removal support it, and it also gives the tissue some later treatments are made from.',
+      refs: ['Lacroix 2001, J Neurosurg', 'Brown 2016, JAMA Oncol'] },
+    { id: 'chemorad', dx: ['gbm'], stage: 'standard', grade: 'Strong evidence',
+      t: 'Radiation with temozolomide',
+      what: 'Radiation given with a chemotherapy pill, temozolomide, at the same time.',
+      ev: 'Standard since a large randomized trial in 2005. It helps most when the MGMT promoter is methylated.',
+      refs: ['Stupp 2005, NEJM', 'Hegi 2005, NEJM'], marks: ['MGMT promoter methylated'] },
+    { id: 'maint', dx: ['gbm'], stage: 'standard', grade: 'Strong evidence',
+      t: 'Temozolomide after radiation, with or without Tumor Treating Fields',
+      what: 'Temozolomide continued after radiation. Tumor Treating Fields is a device worn on the scalp that is added to it.',
+      ev: 'Adding Tumor Treating Fields was tested against temozolomide alone in a large randomized trial (EF-14).',
+      refs: ['Stupp 2017, JAMA (EF-14)'] },
+    { id: 'dcvax', dx: ['gbm'], stage: 'trial', grade: 'Moderate evidence',
+      t: 'DCVax-L, a vaccine made from the person’s own tumor',
+      what: 'Immune cells from the person’s blood are combined with their own tumor tissue and given back, to train the immune system against the tumor.',
+      ev: 'A phase 3 trial published results in 2023. It compared people with patients from other studies rather than with a randomized control group, which is weaker evidence. It is not standard care.',
+      refs: ['Liau 2023, JAMA Oncol'], marks: ['MGMT promoter methylated', 'EGFRvIII present'] },
+    { id: 'prmt5', dx: ['gbm'], stage: 'early', grade: 'Trial only',
+      t: 'PRMT5 inhibitors, for tumors that have lost MTAP',
+      what: 'A newer kind of targeted drug, aimed at tumors missing a gene called MTAP.',
+      ev: 'There are no results in glioblastoma yet. A drug of this kind has had a first study in people with other cancers. Whether it reaches the brain well enough is the open question.',
+      refs: ['Rodon 2024, Ann Oncol', 'ClinicalTrials.gov, PRMT5 trials in glioblastoma'], marks: ['MTAP deletion'] }
+  ];
+
   function trainerUrl(c) { return c && TRAINER[c.id] ? TRAINER_BASE + TRAINER[c.id] + '.html' : null; }
 
   /* =====================================================================
@@ -6705,6 +6798,114 @@ var PLATES = {
     });
     h.appendChild(row);
   }
+  /* ---- Research and new methods ----------------------------------------
+     Item 10 of BACKLOG.md, the screen first. What is being tried beyond
+     standard care, each item on one rung of RLADDER by how far its evidence
+     has got, taken from a named, dated source. It is research, not
+     treatment, and it says so first. No figure is shown: the numbers live on
+     the source, beside the groups they come from, and the projected
+     "best case" curve is kept out entirely (item 13). Who reviewed each item,
+     and how a person gets access, are items 11 and 12, not yet decided. */
+  function rungOf(id) { for (var i = 0; i < RLADDER.length; i++) { if (RLADDER[i].id === id) { return i; } } return 0; }
+  function rungMark(stage) {
+    var r = rungOf(stage);
+    var w = el('span', 'rs-rung r' + r);
+    var dots = el('span', 'rs-dots');
+    dots.setAttribute('aria-hidden', 'true');
+    RLADDER.forEach(function (x, i) { dots.appendChild(el('i', i <= r ? 'on' : null)); });
+    w.appendChild(dots);
+    w.appendChild(el('span', 'rs-rt', RLADDER[r].t));
+    w.setAttribute('title', 'Evidence stage ' + (r + 1) + ' of ' + RLADDER.length + ': ' + RLADDER[r].d);
+    return w;
+  }
+  function paintResearch() {
+    var h = $('#resBody'); h.textContent = '';
+    h.appendChild(el('h1', null, 'Research and new methods'));
+    h.appendChild(el('p', 'lede', 'What is being tried beyond the usual treatment, put on a ladder by how far the evidence has got. '
+      + 'This is research, not treatment, and it is not a plan for you. Anything here is for a conversation with your care team.'));
+
+    var lad = el('ol', 'rs-ladder');
+    lad.setAttribute('aria-label', 'The evidence ladder');
+    RLADDER.forEach(function (x, i) {
+      var li = el('li', 'r' + i);
+      li.appendChild(el('span', 'rs-n', String(i + 1)));
+      var tx = el('span', 'rs-lt');
+      tx.appendChild(el('b', null, x.t));
+      tx.appendChild(el('span', null, x.d));
+      li.appendChild(tx);
+      lad.appendChild(li);
+    });
+    h.appendChild(lad);
+
+    var c = S.cancer;
+    var mine = c ? RESEARCH.filter(function (r) { return r.dx.indexOf(c.id) !== -1; }) : [];
+    var show = mine.length ? mine : (c ? [] : RESEARCH);
+    if (c && !mine.length) {
+      var e = el('div', 'rs-empty');
+      e.appendChild(el('b', null, 'Nothing has been written up for ' + c.n.replace(/,.*$/, '') + ' yet.'));
+      var ep = el('p', null, 'When research for it is published, it will be listed here, on the same ladder. ');
+      if (trainerUrl(c)) {
+        ep.appendChild(document.createTextNode('Until then, the trainer’s page for it carries the cited evidence on standard options: '));
+        ep.appendChild(trainerLink(c, 'open the full page'));
+        ep.appendChild(document.createTextNode('.'));
+      }
+      e.appendChild(ep);
+      h.appendChild(e);
+      return;
+    }
+    if (!c) {
+      h.appendChild(el('p', 'rs-note', 'No diagnosis is chosen yet. What has been written up so far is about glioblastoma.'));
+    }
+
+    /* where every item comes from, said before the items */
+    var src = el('div', 'rs-src');
+    src.appendChild(el('p', 'rs-k', 'Where these come from'));
+    var sb = el('p', 'rs-st');
+    sb.appendChild(el('b', null, RSOURCE.t));
+    sb.appendChild(document.createTextNode(', ' + RSOURCE.by + '. Read on ' + new Date(RSOURCE.read + 'T12:00:00').toLocaleDateString(undefined, { dateStyle: 'long' }) + '.'));
+    src.appendChild(sb);
+    src.appendChild(el('p', null, RSOURCE.note));
+    src.appendChild(el('p', 'rs-warn', 'The dossier itself shows survival figures. They are results for groups of people in published trials, '
+      + 'not a prediction for one person. It also draws a projected curve, which is a projection, not data. Neither is shown here.'));
+    var go = el('a', 'trn-go', 'Open the dossier');
+    go.href = RSOURCE.url; go.target = '_blank'; go.rel = 'noopener noreferrer';
+    go.insertAdjacentHTML('beforeend', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>');
+    src.appendChild(go);
+    h.appendChild(src);
+
+    /* the newest ideas last: standard care first, so the ladder reads upward
+       from what is known to what is not */
+    var list = el('div', 'rs-list');
+    RLADDER.slice().reverse().forEach(function (rung) {
+      var at = show.filter(function (r) { return r.stage === rung.id; });
+      if (!at.length) { return; }
+      var g = el('section', 'rs-group');
+      g.appendChild(el('h2', 'rs-gh', rung.t));
+      at.forEach(function (r) {
+        var cd = el('article', 'rs-card');
+        cd.setAttribute('data-r', r.id);
+        cd.appendChild(rungMark(r.stage));
+        cd.appendChild(el('h3', null, r.t));
+        cd.appendChild(el('p', 'rs-what', r.what));
+        var ev = el('p', 'rs-ev');
+        ev.appendChild(el('b', null, 'What the evidence is. '));
+        ev.appendChild(document.createTextNode(r.ev));
+        cd.appendChild(ev);
+        var meta = el('dl', 'rs-meta');
+        function row(k, v) { meta.appendChild(el('dt', null, k)); meta.appendChild(el('dd', null, v)); }
+        row('The dossier’s grade', r.grade);
+        if (r.marks) { row('Matched in that case to', r.marks.join(', ')); }
+        row('Sources', r.refs.join('; '));
+        cd.appendChild(meta);
+        g.appendChild(cd);
+      });
+      list.appendChild(g);
+    });
+    h.appendChild(list);
+    h.appendChild(el('div', 'flagx warn', 'Information only. This page does not suggest any of these for you, and it is not a substitute '
+      + 'for your care team. Some of these are only available inside a trial, and whether any fits depends on results only your team can weigh.'));
+  }
+
   /* the four parts as plain text, then everything recorded */
   function copyAll() {
     var d = sitData(), c = d.c;
@@ -6881,12 +7082,15 @@ var PLATES = {
     $('#paneInputs').hidden = t !== 'inputs';
     $('#paneAdvisory').hidden = t !== 'advisory';
     $('#paneKb').hidden = t !== 'kb';
+    $('#paneRes').hidden = t !== 'research';
     $('#bLeft').hidden = t !== 'inputs';
     $('#bRight').hidden = t !== 'inputs';
     /* the knowledge base lives in the options menu, so the menu carries its
        state: with only two tabs, neither would look selected while it is up */
     $('#bKb').setAttribute('aria-pressed', t === 'kb' ? 'true' : 'false');
+    $('#bRes').setAttribute('aria-pressed', t === 'research' ? 'true' : 'false');
     if (t === 'advisory') { paintAdvisory(); }
+    if (t === 'research') { paintResearch(); }
     if (t === 'kb') { paintKb(); }
   }
   $$('.tabs button').forEach(function (b) {
@@ -7310,6 +7514,11 @@ var PLATES = {
     if (!$('#rt').classList.contains('on')) { return; }
     if (e.target.closest('button, a, input, textarea, select')) { return; }
     closeRight();
+  });
+  $('#bRes').addEventListener('click', function () {
+    $('#hMore').classList.remove('on');
+    $('#bMore').setAttribute('aria-expanded', 'false');
+    setTab(S.tab === 'research' ? 'inputs' : 'research');
   });
   $('#bKb').addEventListener('click', function () {
     $('#hMore').classList.remove('on');
