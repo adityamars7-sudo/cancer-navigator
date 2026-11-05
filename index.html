@@ -1575,6 +1575,67 @@ body.l-collapsed .rband::before{flex:0 0 8px; height:8px}
   border-radius:999px; padding:2px 7px; margin-top:2px; background:var(--sunk2); color:var(--ink3)}
 .bdg.gate{background:var(--warm-t); color:var(--warm)}
 .bdg.lever{background:var(--brand-t); color:var(--brand-ink)}
+.bdg.rep{background:var(--sage-t, var(--brand-t2)); color:var(--brand-ink)}
+
+/* a run of reading steps drawn as one page (steps 1 to 4, and 11 to 12) */
+.joined .jlead{margin:0 0 12px; color:var(--ink2); font-size:calc(12.6px * var(--step)); line-height:1.5}
+.jidx{position:sticky; top:0; z-index:4; display:flex; gap:6px; flex-wrap:wrap; margin:0 0 16px; padding:8px;
+  background:var(--paper); border:1px solid var(--line2); border-radius:var(--r2, 12px); box-shadow:var(--shadow-s)}
+.jidx button{flex:1 1 120px; min-width:0; text-align:left; border:1px solid transparent; background:var(--sunk, var(--bg));
+  border-radius:calc(var(--r2, 12px) - 3px); padding:7px 10px; cursor:pointer; color:var(--ink); font:inherit;
+  transition:background .2s, border-color .2s}
+.jidx button small{display:block; font-size:calc(9.8px * var(--step)); font-weight:700; letter-spacing:.05em;
+  text-transform:uppercase; color:var(--ink3)}
+.jidx button span{display:block; font-size:calc(11.8px * var(--step)); font-weight:650; line-height:1.3;
+  overflow-wrap:anywhere}
+.jidx button:hover{border-color:var(--brand)}
+.jidx button.at{background:var(--hue-t, var(--brand-t)); border-color:var(--hue, var(--brand))}
+.jidx button.at small{color:var(--hue, var(--brand-ink))}
+.jpart{padding-top:6px; margin-bottom:26px; scroll-margin-top:120px}
+.jpart + .jpart{border-top:1px solid var(--line2); padding-top:22px}
+.jph{display:flex; gap:12px; align-items:flex-start; margin-bottom:12px}
+.jph .jpi{flex:0 0 30px; height:30px; display:flex; align-items:center; justify-content:center;
+  border-radius:var(--ico-r, 9px); background:var(--hue-t, var(--brand-t)); color:var(--hue, var(--brand-ink))}
+.jph small{display:block; font-size:calc(9.8px * var(--step)); font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink3)}
+.jph h3{margin:1px 0 2px; font-family:var(--head, inherit); font-size:calc(15.4px * var(--step)); line-height:1.25}
+.jph p{margin:0; color:var(--ink2); font-size:calc(12.2px * var(--step)); line-height:1.45}
+.jpart.at .jph h3{color:var(--hue, var(--brand-ink))}
+
+/* the road, with where you are on it */
+.jr{list-style:none; margin:8px 0 6px; padding:0; position:relative}
+.jr > li{display:flex; gap:12px; position:relative; padding:0 0 14px}
+.jr > li:not(:last-child)::before{content:""; position:absolute; left:13px; top:28px; bottom:0; width:3px;
+  border-radius:2px; background:var(--line2)}
+.jr > li.jr-past:not(:last-child)::before{background:var(--done-e, var(--done))}
+.jr-n{flex:0 0 29px; height:29px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:var(--sunk, var(--bg)); color:var(--ink3); position:relative; z-index:1}
+.jr-past .jr-n{background:var(--done); color:#fff}
+.jr-now .jr-n{background:var(--live); color:#fff; box-shadow:0 0 0 4px var(--live-t)}
+.jr-b{flex:1 1 auto; min-width:0; padding-top:3px}
+.jr-t{display:flex; flex-wrap:wrap; gap:4px 10px; align-items:baseline}
+.jr-t b{font-size:calc(13px * var(--step))}
+.jr-s{font-size:calc(10.4px * var(--step)); font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--ink3)}
+.jr-now .jr-s{color:var(--live-ink)}
+.jr-now .jr-b{background:var(--live-t); border-radius:var(--r2, 12px); padding:10px 14px 12px; margin-top:-3px}
+.jr-b p{margin:5px 0 0; font-size:calc(12.2px * var(--step)); line-height:1.5; color:var(--ink2)}
+.jr-b .jr-k{font-weight:700; color:var(--ink); margin-top:10px}
+.jr-b ul{margin:4px 0 0; padding-left:18px; font-size:calc(12.2px * var(--step)); line-height:1.5}
+.jr-b .jr-one{color:var(--ink3)}
+.jr-link, .jr-keep{margin-top:7px; border:0; background:none; padding:0; font:inherit; cursor:pointer;
+  font-size:calc(11.8px * var(--step)); font-weight:700; color:var(--brand-ink); text-decoration:underline; text-underline-offset:3px}
+.jr-keep{display:inline-block; margin-top:10px}
+.jr-keep:disabled{color:var(--ink3); text-decoration:none; cursor:default}
+.jr-ask{margin:4px 0 10px; font-size:calc(12.2px * var(--step)); color:var(--ink2)}
+
+/* after a report: what it gave, folded, above the questions still open */
+.gapv{border:1px solid var(--line2); border-radius:var(--r2, 12px); background:var(--sage-w, var(--brand-t2));
+  padding:12px 14px; margin:0 0 14px}
+.gapv-h{display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center; justify-content:space-between}
+.gapv-h b{font-size:calc(12.6px * var(--step))}
+.gapv-t{border:1px solid var(--line); background:var(--paper); border-radius:var(--chip-r, 11px); padding:5px 11px;
+  font:inherit; font-size:calc(11.4px * var(--step)); font-weight:650; color:var(--brand-ink); cursor:pointer}
+.gapv-t:hover{border-color:var(--brand)}
+.gapv .got{margin-top:8px}
 .fc .ftech{font-size:calc(11px * var(--step)); color:var(--ink3); margin-bottom:9px}
 .fc .ftech code{font-family:var(--mono); font-size:.92em}
 .opts{display:flex; flex-wrap:wrap; gap:6px}
@@ -3909,7 +3970,7 @@ var PLATES = {
     /* The four reading steps share one shape, and it is deliberate:
        one sentence, one picture, at most five points the picture does not make,
        then the prose. Lists that restated the plate word for word were removed. */
-    { n: 1, t: 'Where it starts', art: 'brain', ids: [], chap: 1,
+    { n: 1, t: 'Where it starts', art: 'brain', ids: [], chap: 1, page: 'bg',
       b: 'What glioblastoma is, how it behaves, and the symptoms it tends to cause.',
       ask: 'What is this thing, and why has it caused what it has caused?',
       blocks: [
@@ -3923,7 +3984,7 @@ var PLATES = {
         { k: 'lib', v: 'what_is' },
         { k: 'lib', v: 'what_symptoms' }] },
 
-    { n: 2, t: 'How it is diagnosed', art: 'search', ids: [], chap: 2,
+    { n: 2, t: 'How it is diagnosed', art: 'search', ids: [], chap: 2, page: 'bg',
       b: 'The five steps between a first symptom and a treatment plan, and why only tissue settles it.',
       ask: 'How did anyone arrive at this diagnosis, and what is still outstanding?',
       blocks: [
@@ -3937,7 +3998,7 @@ var PLATES = {
           'Until those results are back, no honest ranking of treatments is possible.'] },
         { k: 'lib', v: 'what_words' }] },
 
-    { n: 3, t: 'Genetics and markers', art: 'flask', ids: [], chap: 3,
+    { n: 3, t: 'Genetics and markers', art: 'flask', ids: [], chap: 3, page: 'bg',
       b: 'The markers read from the tissue, what each one settles, and which of them block a ranking.',
       ask: 'What do the markers on the report actually decide?',
       blocks: [
@@ -3958,7 +4019,7 @@ var PLATES = {
           ['Chromosome +7 / \u221210', 'Supports the grade 4 classification.']] },
         { k: 'gatelist' }] },
 
-    { n: 4, t: 'How it spreads', art: 'road', ids: [], chap: 4,
+    { n: 4, t: 'How it spreads', art: 'road', ids: [], chap: 4, page: 'bg',
       b: 'Why the edge of the tumor is not where the disease ends, and what that means for treatment.',
       ask: 'Where can it go, and what does that change about treatment?',
       blocks: [
@@ -3991,14 +4052,28 @@ var PLATES = {
       b: 'Where to be treated, what the numbers mean, and the part no result can tell anyone.',
       blocks: [{ k: 'lib', v: 'outlook' }, { k: 'care' }, { k: 'lib', v: 'wk_team' }, { k: 'lib', v: 'wk_cost' }] },
 
-    { n: 11, t: 'Pathway map', art: 'road', ids: [],
-      b: 'The whole road, all seven parts, so nothing arrives cold.',
-      blocks: [{ k: 'stages' }] },
+    { n: 11, t: 'Pathway map', art: 'road', ids: [], page: 'road',
+      b: 'The whole road, all seven parts, and where you are on it.',
+      ask: 'Where am I on the road, and what comes after this part?',
+      blocks: [{ k: 'journey' }] },
 
-    { n: 12, t: 'Pathway detail', art: 'fork', ids: [],
+    { n: 12, t: 'Pathway detail', art: 'fork', ids: [], page: 'road',
       b: 'The part of the road you are on, the decisions in front of it, and the sources behind them.',
+      ask: 'What gets decided in this part, and what do I need in hand for it?',
       blocks: [{ k: 'stagenow' }, { k: 'lib', v: 'ch_options' }, { k: 'lib', v: 'ch_closes' }, { k: 'sources' }] }
   ];
+  /* Two runs of reading steps are drawn as one page each. The steps stay in
+     the rail and keep their numbers, because they are the trainer's twelve;
+     the panel shows the whole run as one scroll, lands on the step you chose,
+     and follows you as you read. A page of four short chapters read as four
+     separate screens was three extra stops for nothing. */
+  var PAGES = {
+    bg: { t: 'The background, on one page', art: 'book',
+      lead: 'Four short chapters, one after the other. Scroll through, or jump with the names below. Nothing here needs an answer.' },
+    road: { t: 'Your pathway, on one page', art: 'road',
+      lead: 'The whole road first, with where you are on it, then the part you are on in detail. Nothing here needs an answer.' }
+  };
+  function pageSteps(p) { var r = []; STEPS.forEach(function (s, i) { if (s.page === p) { r.push(i); } }); return r; }
   STEPS.forEach(function (s) {
     (s.g2 || []).forEach(function (g) {
       s.ids = s.ids.concat(FIELDS.filter(function (f) { return f.g === g; }).map(function (f) { return f.id; }));
@@ -4010,7 +4085,7 @@ var PLATES = {
   var S = { onb: 'role', role: null, intent: null,
             tab: 'inputs', step: 0, fi: 0, v: {}, cancer: null, read: {}, qs: [],
             notes: {}, paused: null, size: 1, quiet: false, kb: 'all', kbq: '', kopen: {},
-            openStep: 0, speaking: false, said: {}, waved: {} };
+            openStep: 0, speaking: false, said: {}, waved: {}, from: {}, gaps: false };
 
   function ANS(k) { return PLAIN[k] || LIB[k] || null; }
   function cap(t) { return t ? t.charAt(0).toUpperCase() + t.slice(1) : t; }
@@ -4248,6 +4323,7 @@ var PLATES = {
       });
       return d;
     }
+    if (bk.k === 'journey') { journeyInto(d); return d; }
     if (bk.k === 'stages') {
       head('The road, all seven parts');
       STAGES.forEach(function (x, j) {
@@ -4264,8 +4340,8 @@ var PLATES = {
       return d;
     }
     if (bk.k === 'stagenow') {
-      var x2 = STAGES[S.stage || 0];
-      head(x2.t, x2.when);
+      var sn = stageNow(), x2 = STAGES[sn.i];
+      head(x2.t, sn.how === 'told' ? 'where you said you are' : (sn.how === 'picked' ? 'the part you picked' : x2.when));
       para(x2.lead);
       [['What gets decided', x2.decide], ['What you need in hand', x2.need], ['What to watch for', x2.watch]].forEach(function (pr) {
         var hh2 = el('p', null, pr[0]);
@@ -4274,6 +4350,20 @@ var PLATES = {
       });
       var fk = para('<b>The fork here.</b> ' + x2.fork);
       fk.style.cssText += '; border-left:3px solid var(--lever); padding-left:10px; margin-top:10px';
+      /* the stage's own questions, which the list can keep */
+      if ((x2.qs || []).length) {
+        var qh = el('p', null, 'Questions worth taking in');
+        qh.style.cssText = 'font-weight:700; margin-top:12px; font-size:calc(12.5px * var(--step))';
+        d.appendChild(qh); bullets(x2.qs);
+        var kq = el('button', 'jr-keep', x2.qs.every(function (q) { return S.qs.indexOf(q) !== -1; }) ? 'On your list' : 'Keep these on my list');
+        kq.type = 'button';
+        kq.addEventListener('click', function () {
+          x2.qs.forEach(function (q) { if (S.qs.indexOf(q) === -1) { S.qs.push(q); } });
+          kq.textContent = 'On your list'; kq.disabled = true; paintLeft();
+        });
+        if (kq.textContent === 'On your list') { kq.disabled = true; }
+        d.appendChild(kq);
+      }
       return d;
     }
     if (bk.k === 'sources') {
@@ -4567,7 +4657,7 @@ var PLATES = {
   function startOver(line) {
     S.v = {}; S.cancer = null; S.role = null; S.intent = null; S.read = {}; S.qs = [];
     S.notes = {}; S.paused = null; S.step = 0; S.fi = 0; S.onb = 'role';
-    S.said = {}; S.waved = {};
+    S.said = {}; S.waved = {}; S.from = {}; S.gaps = false; S.stage = undefined;
     CI.textContent = '';
     setTab('inputs'); paintAll();
     if (ACCT && ME && !line) { ME.cur = null; }
@@ -4667,7 +4757,8 @@ var PLATES = {
       : (f.kind === 'search' ? 'All sixty-one are listed on the right. Search, or browse by part of the body.'
       : 'The options are on the right. Pick whichever is closest.'));
     ps.push('<span class="toright">' + where + '</span>');
-    var m = guide(ps, { title: f.t, tag: 'Step ' + s.n + ' of 12 · ' + s.t + ' · question ' + (S.fi + 1) + ' of ' + s.ids.length });
+    var m = (S.step === 4 && !S.said.up5 && !Object.keys(S.from).length && S.cancer && S.cancer.full) ? null
+      : guide(ps, { title: f.t, tag: 'Step ' + s.n + ' of 12 · ' + s.t + ' · question ' + (S.fi + 1) + ' of ' + s.ids.length });
     var list = [];
     if (f.kind === 'text') { list.push({ t: 'Type it below instead', cls: 'thin', go: function () { $('#say').focus(); } }); }
     if (f.kind === 'search') {
@@ -4677,6 +4768,15 @@ var PLATES = {
     if (!f.waits && f.kind !== 'text') { list.push({ t: 'I do not know this one', cls: 'thin', go: function () { skip(); } }); }
     else if (f.kind !== 'text') { list.push({ t: 'Nothing to add', cls: 'thin', go: function () { skip(); } }); }
     list.push({ t: 'Why does this one matter?', cls: 'thin', go: function () { whyChat(f); } });
+    /* Reading a report fills most of these at once, so the first time the
+       questions start it is offered before the one-at-a-time route. */
+    if (S.step === 4 && !S.said.up5 && !Object.keys(S.from).length && S.cancer && S.cancer.full) {
+      S.said.up5 = 1;
+      list.unshift({ t: ACCT ? 'Upload case files first' : 'Read my report first', cls: 'key', go: function () { reportDialog(); } });
+      ps.splice(ps.length - 1, 0, '<span style="color:var(--ink3)">If you have a pathology or molecular report, reading it first fills in what it can. Then only the gaps are left to answer.</span>');
+      m = null;
+    }
+    if (!m) { m = guide(ps, { title: f.t, tag: 'Step ' + s.n + ' of 12 · ' + s.t + ' · question ' + (S.fi + 1) + ' of ' + s.ids.length }); }
     openRight(); flash(f.id);
     chipsOn(m, list);
     paintAll();
@@ -4712,7 +4812,11 @@ var PLATES = {
     var ps = [];
     if (s.ask) { ps.push('This one answers a single question: <b>' + s.ask + '</b>'); }
     ps.push(s.chap === 1
-      ? 'There is a page on the right that covers it, then four lines it does not cover. Nothing here needs an answer from you.'
+      ? 'The four background chapters are one page on the right, this one first. Scroll through it, or jump with the names at its top. Nothing here needs an answer from you.'
+      : s.n === 11
+      ? 'This and the next step are one page on the right: the whole road with where you are on it, then the part you are on. Nothing here needs an answer.'
+      : s.n === 12
+      ? 'The part of the road you are on, further down the same page. Pick a different part on the road above it to read that one instead.'
       : (s.chap === 4
         ? 'Last of the four. The page is on the right, and after this the questions start being about you.'
         : 'The page is on the right, with the few things it leaves out underneath it. Nothing here needs an answer.'));
@@ -4745,6 +4849,7 @@ var PLATES = {
     if (S.step > 0) { list.push({ t: 'Back one step', cls: 'thin', go: function () { goStep(S.step - 1); } }); }
     chipsOn(m, list);
     paintAll();
+    landOnPart();
   }
 
 
@@ -4862,6 +4967,7 @@ var PLATES = {
   }
   function setVal(f, v, fromPanel) {
     S.v[f.id] = v;
+    delete S.from[f.id];
     /* The panel stays open until it is closed. It used to step out of the way
        on a phone once an answer landed, on the reasoning that the reply was
        the thing worth seeing next. In use that is wrong: somebody filling in
@@ -5180,15 +5286,29 @@ var PLATES = {
       var f = FIELD(x.id);
       if (!f) { return; }
       S.v[f.id] = x.v;
+      S.from[f.id] = 'report';
       names.push(label(f, x.v) + ' for ' + f.t.replace(/\?$/, ''));
     });
+    if (names.length) { S.gaps = true; }
     me(ACCT ? 'Here are my case files' : 'Here is my report');
     paintAll();
     var said = names.length
       ? ['Taken from the report: ' + names.join('; ') + '.',
          'Everything else is still yours to answer, and any of these can be changed from the list on the right.']
       : ['I could read the diagnosis off it, and nothing else with enough confidence to record.'];
-    guide(said, { title: 'Read from your report' });
+    var gm = guide(said, { title: 'Read from your report' });
+    /* what is left, named by step rather than counted */
+    var left = STEPS.filter(function (st) { return !st.reads && st.ids.some(function (id) { return !has(id) && ['who', 'when', 'dx', 'priority', 'detail', 'share'].indexOf(id) === -1; }); });
+    if (names.length && left.length && !(dx && (S.onb || !S.cancer || S.cancer.id !== dx.id))) {
+      var fst = STEPS.indexOf(left[0]);
+      var gd = el('div', 'deep');
+      gd.appendChild(el('p', null, 'The steps that still have questions it could not answer: '
+        + left.map(function (st) { return 'step ' + st.n + ', ' + st.t.toLowerCase(); }).join('; ')
+        + '. Those steps now show only what is still open, with what the report gave listed above it.'));
+      gm.appendChild(gd);
+      chipsOn(gm, [{ t: 'Fill the gaps, starting with step ' + STEPS[fst].n, cls: 'key', go: function () { goStep(fst); } },
+                   { t: 'Not now', cls: 'thin', go: function () {} }]);
+    }
     /* a new diagnosis carries the flow onward, the same as choosing it by hand.
        The one already chosen does not: re-running it sent someone mid-way
        through step 5 back to being asked what they came for. */
@@ -5277,7 +5397,7 @@ var PLATES = {
     var v = {};
     Object.keys(S.v).forEach(function (k) { v[k] = (k === 'dx' && S.v.dx) ? S.v.dx.id : S.v[k]; });
     return { ver: 1, v: v, onb: S.onb, intent: S.intent ? S.intent.id : null,
-             read: S.read, qs: S.qs, notes: S.notes, step: S.step, fi: S.fi };
+             read: S.read, qs: S.qs, notes: S.notes, step: S.step, fi: S.fi, from: S.from };
   }
   function restore(d) {
     var v = d.v || {};
@@ -5287,7 +5407,7 @@ var PLATES = {
     if (dx) { S.v.dx = dx; }
     S.cancer = dx; S.role = v.who ? byId(ROLES, v.who) : null;
     S.intent = d.intent ? byId(INTENTS, d.intent) : null;
-    S.read = d.read || {}; S.qs = d.qs || []; S.notes = d.notes || {};
+    S.read = d.read || {}; S.qs = d.qs || []; S.notes = d.notes || {}; S.from = d.from || {}; S.gaps = false;
     S.step = d.step || 0; S.fi = d.fi || 0; S.openStep = S.step; S.paused = null;
     S.onb = d.onb === undefined ? false : d.onb;
   }
@@ -6189,6 +6309,7 @@ var PLATES = {
     var fh = el('div', 'fh');
     fh.appendChild(el('b', null, f.t));
     if (f.badge) { fh.appendChild(el('span', 'bdg ' + f.badge, f.badge === 'context' ? 'context' : f.badge)); }
+    if (S.from[f.id] && has(f.id)) { fh.appendChild(el('span', 'bdg rep', 'from your report')); }
     c.appendChild(fh);
     var tech = el('p', 'ftech'); tech.innerHTML = 'On a report: <code></code>';
     tech.querySelector('code').textContent = f.tech; c.appendChild(tech);
@@ -6546,6 +6667,152 @@ var PLATES = {
     pb.title = prev ? 'Back to step ' + prev.n + ', ' + prev.t.toLowerCase() : 'This is the first step';
     nb.title = next ? 'On to step ' + next.n + ', ' + next.t.toLowerCase() : 'This is the last step';
   }
+  /* ---------------- a run of reading steps as one page ---------------- */
+  function joinedPage(s) {
+    var P = PAGES[s.page], idx = pageSteps(s.page);
+    var F = sec(P.t, P.art, null, 'open joined');
+    F.setAttribute('data-page', s.page);
+    F.appendChild(el('p', 'jlead', P.lead));
+    var nav = el('nav', 'jidx'); nav.setAttribute('aria-label', 'Parts of this page');
+    idx.forEach(function (i) {
+      var st = STEPS[i];
+      var b = el('button', i === S.step ? 'at' : null); b.type = 'button';
+      b.setAttribute('data-i', i);
+      if (i === S.step) { b.setAttribute('aria-current', 'step'); }
+      b.appendChild(el('small', null, 'Step ' + st.n));
+      b.appendChild(el('span', null, st.t));
+      b.addEventListener('click', function () { if (i !== S.step) { goStep(i); } else { landOnPart(); } });
+      nav.appendChild(b);
+    });
+    F.appendChild(nav);
+    idx.forEach(function (i) {
+      var st = STEPS[i];
+      var part = el('section', 'jpart' + (i === S.step ? ' at' : ''));
+      part.setAttribute('data-i', i);
+      part.id = 'jp' + st.n;
+      var hd = el('div', 'jph');
+      hd.innerHTML = '<span class="jpi">' + solid(st.art, 13) + '</span>';
+      var tx = el('div');
+      tx.appendChild(el('small', null, 'Step ' + st.n + ' of 12'));
+      tx.appendChild(el('h3', null, st.t));
+      if (st.ask) { tx.appendChild(el('p', null, st.ask)); }
+      hd.appendChild(tx); part.appendChild(hd);
+      (st.blocks || []).forEach(function (bk, bi) { part.appendChild(blockNode(bk, st, bi)); });
+      F.appendChild(part);
+    });
+    return F;
+  }
+  /* Land on the step that was asked for. The first part of a page is the top
+     of the panel, exactly as every other step lands; a later part is brought
+     up to sit just under the panel header. */
+  var spyHold = 0;
+  function landOnPart() {
+    var s = curStep(); if (!s || !s.page || S.onb) { return; }
+    var rt = $('#rt'), part = document.getElementById('jp' + s.n);
+    var nav = document.querySelector('#rBody .jidx'), rth = document.querySelector('#rt .rth');
+    if (nav && rth) { nav.style.top = rth.offsetHeight + 'px'; }
+    if (!rt || !part) { return; }
+    spyHold = Date.now() + 500;
+    if (pageSteps(s.page)[0] === S.step) { rt.scrollTop = 0; return; }
+    var off = (rth ? rth.offsetHeight : 0) + (nav ? nav.offsetHeight : 0) + 10;
+    rt.scrollTop = Math.max(0, part.getBoundingClientRect().top - rt.getBoundingClientRect().top + rt.scrollTop - off);
+  }
+  /* Reading down the page moves you through the steps: the rail, the panel
+     header and the index follow, quietly, with nothing said in the chat. */
+  function spyParts() {
+    if (Date.now() < spyHold || S.onb || S.tab !== 'inputs') { return; }
+    var s = curStep(); if (!s || !s.page) { return; }
+    var rt = $('#rt'), rth = document.querySelector('#rt .rth'), nav = document.querySelector('#rBody .jidx');
+    var line = rt.getBoundingClientRect().top + (rth ? rth.offsetHeight : 0) + (nav ? nav.offsetHeight : 0) + 40;
+    var parts = Array.prototype.slice.call(document.querySelectorAll('#rBody .jpart'));
+    if (!parts.length) { return; }
+    var pick = parts[0];
+    parts.forEach(function (p) { if (p.getBoundingClientRect().top <= line) { pick = p; } });
+    if (rt.scrollTop + rt.clientHeight >= rt.scrollHeight - 2) { pick = parts[parts.length - 1]; }
+    var i = Number(pick.getAttribute('data-i'));
+    if (i === S.step) { return; }
+    S.step = i; S.openStep = i; S.fi = 0;
+    var st = curStep();
+    S.read['step' + st.n] = 1;
+    parts.forEach(function (p) { p.classList.toggle('at', p === pick); });
+    Array.prototype.forEach.call(document.querySelectorAll('#rBody .jidx button'), function (b) {
+      var on = Number(b.getAttribute('data-i')) === i;
+      b.classList.toggle('at', on);
+      if (on) { b.setAttribute('aria-current', 'step'); } else { b.removeAttribute('aria-current'); }
+    });
+    paintChap(st); paintNav();
+    panelMode('read', 'Step ' + st.n + ' of 12');
+    $('#rTitle').textContent = st.t; $('#rBlurb').textContent = st.b;
+    paintLeft();
+  }
+
+  /* ---------------- the road, with where you are on it ---------------- */
+  var WHEN_STAGE = { today: 0, waiting: 1, deciding: 3, during: 4, after: 5, back: 6 };
+  function stageNow() {
+    if (typeof S.stage === 'number') { return { i: S.stage, how: 'picked' }; }
+    if (has('when') && WHEN_STAGE[S.v.when] !== undefined) { return { i: WHEN_STAGE[S.v.when], how: 'told' }; }
+    return { i: 0, how: 'none' };
+  }
+  function journeyInto(d) {
+    var sn = stageNow();
+    var hh = el('h4', null, 'The road, all seven parts'); d.appendChild(hh);
+    if (sn.how === 'none') {
+      var ask = el('p', 'jr-ask');
+      ask.appendChild(document.createTextNode('Nothing is marked yet, because you have not said where things are. '));
+      var go = el('button', 'jr-link', 'Tell me where things are'); go.type = 'button';
+      go.addEventListener('click', function () {
+        var si = STEPS.findIndex(function (x) { return x.ids.indexOf('when') !== -1; });
+        S.onb = false; goField(si, STEPS[si].ids.indexOf('when'));
+      });
+      ask.appendChild(go);
+      d.appendChild(ask);
+    }
+    var open = sitData().open || [];
+    var ol = el('ol', 'jr');
+    STAGES.forEach(function (x, j) {
+      var state = sn.how === 'none' ? 'ahead' : (j < sn.i ? 'past' : (j === sn.i ? 'now' : 'ahead'));
+      var li = el('li', 'jr-' + state);
+      li.setAttribute('data-stage', x.id);
+      var node = el('span', 'jr-n'); node.innerHTML = solid(x.art, 12); li.appendChild(node);
+      var body = el('div', 'jr-b');
+      var top = el('div', 'jr-t');
+      top.appendChild(el('b', null, x.t));
+      top.appendChild(el('span', 'jr-s', state === 'now' ? (sn.how === 'picked' ? 'The part you picked' : 'You are here')
+        : (state === 'past' ? 'Behind you' : (sn.how === 'none' ? x.when : 'Ahead, ' + x.when))));
+      body.appendChild(top);
+      if (state === 'now') {
+        body.appendChild(el('p', null, x.lead));
+        var dl = el('p', 'jr-k', 'What gets decided here'); body.appendChild(dl);
+        var ul = el('ul'); x.decide.forEach(function (t) { ul.appendChild(el('li', null, t)); }); body.appendChild(ul);
+        /* the results this part waits on, only where results are what it waits on */
+        if ((x.id === 'diagnose' || x.id === 'plan') && open.length) {
+          body.appendChild(el('p', 'jr-k', 'Results still open that this part waits on'));
+          var ul2 = el('ul'); open.slice(0, 4).forEach(function (f) { ul2.appendChild(el('li', null, cap(f.tech))); });
+          body.appendChild(ul2);
+        }
+      } else {
+        body.appendChild(el('p', 'jr-one', 'Decides ' + x.decide[0].charAt(0).toLowerCase() + x.decide[0].slice(1) + '.'));
+      }
+      var more = el('button', 'jr-link', state === 'now' ? 'Read this part in detail' : (sn.how === 'none' ? 'Read this part' : 'Look at this part instead'));
+      more.type = 'button';
+      more.addEventListener('click', function () {
+        if (state !== 'now') { S.stage = j; }
+        var di = STEPS.findIndex(function (z) { return z.n === 12; });
+        if (S.step === di) { paintRight(); landOnPart(); } else { goStep(di); }
+      });
+      body.appendChild(more);
+      li.appendChild(body);
+      ol.appendChild(li);
+    });
+    d.appendChild(ol);
+    if (sn.how === 'picked' && has('when')) {
+      var bk2 = el('button', 'jr-link', 'Go back to where you said you are'); bk2.type = 'button';
+      bk2.addEventListener('click', function () { S.stage = undefined; paintRight(); landOnPart(); });
+      d.appendChild(bk2);
+    }
+    d.appendChild(el('p', 'lnote', 'Where you are comes from your own answer about where things are. No treatment on this road is ranked or recommended here; that is a conversation for your care team.'));
+  }
+
   function paintRight() {
     if (typeof syncKick === 'function') { syncKick(); }
     paintNav();
@@ -6584,7 +6851,9 @@ var PLATES = {
 
     /* a step that explains puts its material here; one that asks puts its inputs */
     var F;
-    if (s.reads) {
+    if (s.reads && s.page) {
+      F = joinedPage(s);
+    } else if (s.reads) {
       F = sec('What this step covers', s.art, null, 'open');
       (s.blocks || []).forEach(function (bk, bi) { F.appendChild(blockNode(bk, s, bi)); });
     } else {
@@ -6594,7 +6863,35 @@ var PLATES = {
          offered here rather than only on the first screen, which is long gone
          by the time somebody is looking at twelve questions. */
       F.appendChild(readRow());
-      s.ids.forEach(function (id) { F.appendChild(fieldCard(FIELD(id))); });
+      /* After a report, the answers it gave fold into one list and only the
+         questions still open are drawn as cards. One press shows them all. */
+      var fromRep = s.ids.filter(function (id) { return S.from[id] && has(id); });
+      if (fromRep.length) {
+        var gw = el('div', 'gapv');
+        var gt = el('div', 'gapv-h');
+        gt.appendChild(el('b', null, 'Taken from your report'));
+        var tg = el('button', 'gapv-t', S.gaps ? 'Show them as questions too' : 'Show only what is still open');
+        tg.type = 'button';
+        tg.setAttribute('aria-pressed', S.gaps ? 'true' : 'false');
+        tg.addEventListener('click', function () { S.gaps = !S.gaps; paintRight(); });
+        gt.appendChild(tg); gw.appendChild(gt);
+        if (S.gaps) {
+          var gl = el('ul', 'got');
+          fromRep.forEach(function (id) {
+            var ff = FIELD(id);
+            gl.appendChild(gotRow(ff.tech, label(ff), function () { S.gaps = false; S.fi = s.ids.indexOf(id); paintRight(); flash(id); }));
+          });
+          gw.appendChild(gl);
+          if (fromRep.length === s.ids.length) {
+            gw.appendChild(el('p', 'lnote', 'The report answered everything in this step. Any of it can be changed with the pencil.'));
+          }
+        }
+        F.appendChild(gw);
+      }
+      s.ids.forEach(function (id) {
+        if (S.gaps && S.from[id] && has(id)) { return; }
+        F.appendChild(fieldCard(FIELD(id)));
+      });
       if ((s.blocks || []).length) {
         var R = sec('Reference for this step', 'book', null, 'open');
         (s.blocks || []).forEach(function (bk, bi) { R.appendChild(blockNode(bk, s, bi)); });
@@ -7503,6 +7800,7 @@ var PLATES = {
           go: function () { me('Start over'); startOver(); } }], 'Pick your diagnosis on the right');
       });
   }
+  $('#rt').addEventListener('scroll', function () { window.requestAnimationFrame(spyParts); }, { passive: true });
   $('#rPrev').addEventListener('click', function () { if (!S.onb) { goStep(S.step - 1); } });
   $('#rNext').addEventListener('click', function () { if (!S.onb) { leaveStep(S.step + 1); } });
   $('#bCol').addEventListener('click', function () {
