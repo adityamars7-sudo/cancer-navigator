@@ -1154,6 +1154,35 @@ html[data-quiet="1"]{--hp-a:#3C7AD6; --hp-b:#5590E4; --hp-sh:10,22,40;
 .rs-dots i{width:7px; height:7px; border-radius:50%; background:var(--sunk2)}
 .rs-dots i.on{background:var(--brand)}
 .rs-rt{font-size:calc(11.2px * var(--step)); font-weight:700; color:var(--ink2)}
+/* a way out of the panes the menu opens */
+.paneback{position:sticky; top:0; z-index:5; display:inline-flex; align-items:center; gap:9px; margin:0 0 18px;
+  padding:9px 16px 9px 12px; border:1px solid var(--line); border-radius:999px; background:var(--paper);
+  box-shadow:var(--shadow-s); cursor:pointer; font:inherit; font-size:calc(12.6px * var(--step)); font-weight:700; color:var(--brand-ink)}
+.paneback small{font-size:calc(11px * var(--step)); font-weight:560; color:var(--ink3); padding-left:9px; border-left:1px solid var(--line)}
+.paneback:hover{border-color:var(--brand); background:var(--brand-t2)}
+.paneback:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+/* the way to a person about research, the middle of the pane, in the help
+   panel's own blue so it reads as the same place */
+.rs-talk{display:grid; grid-template-columns:auto 1fr; column-gap:20px; align-items:start;
+  margin:8px 0 24px; padding:26px 28px; border-radius:var(--r);
+  background:linear-gradient(135deg, var(--hp-c1) 0%, var(--paper) 88%); border:1px solid var(--hp-c1);
+  box-shadow:0 2px 6px rgba(var(--hp-sh),.08), 0 16px 40px rgba(var(--hp-sh),.12)}
+.rs-talk-i{grid-row:span 3; width:58px; height:58px; border-radius:16px; display:grid; place-items:center;
+  background:linear-gradient(135deg, var(--hp-a), var(--hp-b)); color:var(--hp-on);
+  box-shadow:0 8px 20px rgba(var(--hp-sh),.3)}
+.rs-talk h2{margin:2px 0 0; font-size:calc(18px * var(--step)); font-weight:740; color:var(--hp-ink); letter-spacing:-.01em}
+.rs-talk p{margin:8px 0 0; font-size:calc(13.2px * var(--step)); line-height:1.6; color:var(--ink2); max-width:66ch}
+.rs-talk-b{display:flex; flex-wrap:wrap; gap:10px; margin-top:16px}
+.rs-talk-go{padding:12px 22px; border:0; border-radius:12px; cursor:pointer; font:inherit;
+  font-size:calc(13.4px * var(--step)); font-weight:740;
+  /* words, so the deep blue: white on the bright one is 3.2 */
+  color:#FFFFFF; background:linear-gradient(135deg, #1E4FA3, #2D6BD0); box-shadow:0 6px 16px rgba(var(--hp-sh),.28)}
+html[data-quiet="1"] .rs-talk-go{color:#0B1A2E; background:linear-gradient(135deg, #9CC2F2, #CFE0FA)}
+.rs-talk-alt{padding:12px 18px; border:1px solid var(--hp-c1); border-radius:12px; cursor:pointer; font:inherit;
+  font-size:calc(13px * var(--step)); font-weight:680; color:var(--hp-ink); background:var(--paper)}
+.rs-talk-go:hover,.rs-talk-alt:hover{transform:translateY(-1px)}
+.rs-talk-go:focus-visible,.rs-talk-alt:focus-visible{outline:2px solid var(--hp-a); outline-offset:2px}
+@media(max-width:620px){ .rs-talk{grid-template-columns:1fr; padding:20px 18px} .rs-talk-i{grid-row:auto; margin-bottom:12px} }
 .rs-empty{padding:18px 20px; border-radius:var(--r2, 14px); background:var(--paper); box-shadow:var(--shadow-s)}
 .rs-empty b{display:block; font-size:calc(14px * var(--step)); color:var(--ink); margin-bottom:6px}
 .rs-empty p{margin:0; font-size:calc(12.8px * var(--step)); color:var(--ink2); line-height:1.55}
@@ -1465,6 +1494,137 @@ html[data-quiet="1"] .toLatest{background:#32323A; color:var(--ink)}
   border-radius:12px; background:var(--warm-t); border:1px solid var(--line)}
 .ahead svg{flex:0 0 15px; height:15px; margin-top:1px; color:var(--warm)}
 .ahead p{font-size:calc(11.6px * var(--step)); line-height:1.55; color:var(--ink2); margin:0}
+
+/* Learning about the disease, always in sight. Steps 1 to 4 are reading,
+   and people did not know they were there: the rail scrolls them away and
+   nothing in the header said so. It wears the reading chapter's lavender. */
+.lrn{display:inline-flex; align-items:center; gap:9px; height:42px; padding:0 14px 0 5px; margin-left:4px;
+  border:0; border-radius:12px; cursor:pointer; font:inherit; text-align:left;
+  background:var(--c-learn-t); color:var(--c-learn); min-width:0; flex:0 1 auto;
+  transition:transform .14s, box-shadow .14s}
+.lrn[hidden]{display:none}
+.lrn .lrn-i{flex:0 0 32px; width:32px; height:32px; border-radius:var(--ico-r); display:grid; place-items:center;
+  background:var(--paper); color:var(--c-learn); box-shadow:var(--shadow-s)}
+.lrn-t{display:flex; flex-direction:column; min-width:0; line-height:1.2}
+.lrn-t b{font-size:calc(12.4px * var(--step)); font-weight:720; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.lrn-t span{font-size:calc(10.4px * var(--step)); font-weight:560; opacity:.92; white-space:nowrap}
+.lrn:hover{transform:translateY(-1px); box-shadow:var(--shadow-s)}
+.lrn[aria-pressed=true]{box-shadow:inset 0 0 0 2px var(--c-learn)}
+.lrn:focus-visible,.rlearn:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+.hdr.fit2 .lrn-t span{display:none}
+.hdr.fit3 .lrn-t{display:none}
+.hdr.fit3 .lrn{padding-right:5px}
+/* the same offer at the top of the panel while it asks what you came for */
+.rlearn{position:absolute; top:16px; right:18px; display:flex; align-items:center; gap:10px; max-width:250px;
+  padding:8px 14px 8px 8px; border:0; border-radius:14px; cursor:pointer; font:inherit; text-align:left;
+  background:var(--c-learn-t); color:var(--c-learn); box-shadow:var(--shadow-s); transition:transform .14s, box-shadow .14s}
+.rlearn[hidden]{display:none}
+.rlearn .lrn-i{flex:0 0 36px; width:36px; height:36px; border-radius:var(--ico-r); display:grid; place-items:center;
+  background:var(--paper); color:var(--c-learn)}
+.rlearn small{display:block; font-size:calc(10.4px * var(--step)); font-weight:600; opacity:.92; line-height:1.3}
+.rlearn b{display:block; font-size:calc(12.8px * var(--step)); font-weight:740; line-height:1.3}
+.rlearn:hover{transform:translateY(-1px); box-shadow:var(--shadow-lift)}
+@media(max-width:1340px){ .rlearn{right:56px} }
+@media(prefers-reduced-motion:reduce){ .lrn:hover,.rlearn:hover{transform:none} }
+html[data-motion="reduced"] .lrn:hover, html[data-motion="reduced"] .rlearn:hover{transform:none}
+
+/* The two ways into steps 5 to 9, drawn large at the top of the panel
+   until one of them has happened. It replaced a single quiet row above the
+   first question that nobody saw. */
+.ent{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.entc{display:flex; flex-direction:column; align-items:flex-start; gap:8px; padding:18px 18px 16px;
+  border-radius:var(--r2); border:1px solid var(--line); background:var(--paper); cursor:pointer;
+  font:inherit; text-align:left; color:var(--ink); box-shadow:var(--shadow-s);
+  transition:transform .14s, box-shadow .14s, border-color .14s}
+.entc.up{background:linear-gradient(160deg, var(--brand-t) 0%, var(--paper) 78%); border-color:var(--brand)}
+.entc-i{width:46px; height:46px; border-radius:var(--ico-r); display:grid; place-items:center;
+  background:var(--c-case-t); color:var(--c-case)}
+.entc.up .entc-i{background-color:var(--fill); background-image:var(--sheen); color:var(--on-fill)}
+.entc > b{font-size:calc(15px * var(--step)); font-weight:740; line-height:1.3; margin-top:4px}
+.entc-d{font-size:calc(12px * var(--step)); line-height:1.55; color:var(--ink2); flex:1 1 auto}
+.entc-go{margin-top:6px; display:inline-flex; align-items:center; padding:8px 14px; border-radius:var(--chip-r, 999px);
+  font-size:calc(12px * var(--step)); font-weight:700; background:var(--sunk); color:var(--brand-ink)}
+.entc.up .entc-go{background-color:var(--fill); background-image:var(--sheen); color:var(--on-fill)}
+.entc:hover{transform:translateY(-2px); box-shadow:var(--shadow-lift); border-color:var(--brand)}
+.entc:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+@media(max-width:560px){ .ent{grid-template-columns:1fr} }
+@media(prefers-reduced-motion:reduce){ .entc:hover{transform:none} }
+html[data-motion="reduced"] .entc:hover{transform:none}
+
+/* The pathway map as stage columns, the trainer's own layout: the road runs
+   left to right, one column per part, each holding the same four kinds of
+   card under a labelled tag. Behind you is teal, the part you are on is the
+   live blue, ahead is plain. It scrolls sideways inside the panel and opens
+   full width on request. */
+.pbw{margin-top:6px}
+.pb-tools{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin:4px 0 10px}
+.pb-leg{display:flex; flex-wrap:wrap; gap:6px}
+.pb-tag{display:inline-flex; align-items:center; gap:5px; padding:3px 9px 3px 7px; border-radius:999px;
+  font-size:calc(10.8px * var(--step)); font-weight:680; background:var(--sunk); color:var(--ink2)}
+.pb-tag svg,.pb-k svg{flex:0 0 13px}
+.k-res .pb-k,.pb-tag.k-res{color:var(--c-learn)} .pb-tag.k-res{background:var(--c-learn-t)}
+.k-dec .pb-k,.pb-tag.k-dec{color:var(--c-case)} .pb-tag.k-dec{background:var(--c-case-t)}
+.k-need .pb-k,.pb-tag.k-need{color:var(--c-sum)} .pb-tag.k-need{background:var(--c-sum-t)}
+.k-ask .pb-k,.pb-tag.k-ask{color:var(--live-ink)} .pb-tag.k-ask{background:var(--live-t)}
+.pb-big{display:inline-flex; align-items:center; gap:7px; padding:7px 13px; border:1px solid var(--line);
+  border-radius:999px; background:var(--paper); cursor:pointer; font:inherit; font-size:calc(11.6px * var(--step));
+  font-weight:680; color:var(--brand-ink)}
+.pb-big:hover{border-color:var(--brand); background:var(--brand-t2)}
+.pb-steps{display:flex; gap:4px; overflow-x:auto; padding:2px 0 8px; scrollbar-width:thin}
+.pb-s{flex:0 0 auto; display:inline-flex; align-items:center; gap:6px; padding:5px 10px 5px 5px; border-radius:999px;
+  border:1px solid var(--line); background:var(--paper); cursor:pointer; font:inherit;
+  font-size:calc(11px * var(--step)); font-weight:640; color:var(--ink2)}
+.pb-s i{font-style:normal; width:20px; height:20px; border-radius:50%; display:grid; place-items:center;
+  font-size:calc(10.4px * var(--step)); font-weight:760; background:var(--sunk); color:var(--ink2)}
+.pb-s.pb-past i{background-color:var(--done); color:#fff}
+.pb-s.pb-now{border-color:var(--live); background:var(--live-t); color:var(--live-ink)}
+.pb-s.pb-now i{background-color:var(--live); color:#fff}
+.pb{display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x proximity; padding:2px 2px 14px; scrollbar-width:thin}
+.pb:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+.pb-col{flex:0 0 268px; scroll-snap-align:start; display:flex; flex-direction:column; gap:8px;
+  padding:12px; border-radius:var(--r2); background:var(--sunk); border-top:4px solid var(--line)}
+.pb-col.pb-past{border-top-color:var(--done)}
+.pb-col.pb-now{border-top-color:var(--live); background:var(--live-t); box-shadow:var(--shadow-s)}
+.pb-h{display:flex; gap:9px; align-items:flex-start}
+.pb-n{flex:0 0 28px; width:28px; height:28px; border-radius:50%; display:grid; place-items:center;
+  background:var(--paper); color:var(--ink2); box-shadow:var(--shadow-s)}
+.pb-past .pb-n{background-color:var(--done); color:#fff}
+.pb-now .pb-n{background-color:var(--live); color:#fff}
+.pb-h small{display:block; font-size:calc(10.2px * var(--step)); font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--ink3)}
+.pb-h b{display:block; font-size:calc(13.4px * var(--step)); font-weight:740; line-height:1.3; color:var(--ink); margin-top:1px}
+.pb-st{align-self:flex-start; padding:2px 9px; border-radius:999px; font-size:calc(10.6px * var(--step)); font-weight:720;
+  background:var(--paper); color:var(--ink2)}
+.pb-past .pb-st{color:var(--brand-ink)}
+.pb-now .pb-st{background-color:var(--live); color:#fff}
+.pb-card{padding:10px 11px; border-radius:12px; background:var(--paper); box-shadow:var(--shadow-s)}
+.pb-k{display:flex; align-items:center; gap:6px; margin:0 0 6px; font-size:calc(10.4px * var(--step)); font-weight:760;
+  letter-spacing:.05em; text-transform:uppercase}
+.pb-card ul{margin:0; padding-left:16px}
+.pb-card li{font-size:calc(11.8px * var(--step)); line-height:1.5; color:var(--ink2); margin:3px 0}
+.pb-card.k-if p{margin:0; font-size:calc(11.8px * var(--step)); line-height:1.55; color:var(--ink2)}
+.pb-r{display:flex; flex-direction:column; align-items:flex-start; gap:3px; width:100%; padding:6px 7px; margin:0 -2px;
+  border:0; border-radius:8px; background:none; cursor:pointer; font:inherit; text-align:left}
+.pb-r + .pb-r{border-top:1px solid var(--line2); border-radius:0 0 8px 8px}
+.pb-r:hover{background:var(--sunk)}
+.pb-rn{font-size:calc(11.8px * var(--step)); font-weight:660; color:var(--ink)}
+.pb-v{display:inline-block; max-width:100%; padding:1px 8px; border-radius:999px; font-size:calc(10.6px * var(--step));
+  font-weight:640; line-height:1.5; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.pb-v.got{background:var(--done-t); color:var(--brand-ink)}
+.pb-v.open{background:var(--sunk); color:var(--ink3)}
+.pb-v.waved{background:var(--sunk); color:var(--ink3); font-style:italic}
+.pb-col .jr-keep{margin-top:8px}
+.pb-more{align-self:flex-start; margin-top:auto}
+/* full width */
+.pbx{position:fixed; inset:0; z-index:200; background:rgba(18,24,22,.5); display:flex; align-items:flex-start; justify-content:center;
+  padding:28px 20px; overflow:auto}
+.pbx-i{width:min(1880px, 100%); background:var(--bg); border-radius:var(--r); box-shadow:var(--shadow-lift); padding:18px 22px 10px}
+.pbx-h{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:4px}
+.pbx-h b{font-size:calc(17px * var(--step)); font-weight:740; color:var(--ink)}
+.pbx-x{padding:8px 16px; border:1px solid var(--line); border-radius:999px; background:var(--paper); cursor:pointer;
+  font:inherit; font-size:calc(12.2px * var(--step)); font-weight:680; color:var(--ink)}
+.pbx-x:hover{border-color:var(--brand)}
+.pbw.wide .pb-col{flex:1 1 0; min-width:208px}
+@media(max-width:700px){ .pb-col{flex-basis:240px} .pbx{padding:10px 8px} .pbx-i{padding:14px 12px 8px} }
 
 /* moving between steps: arrows in the header, always reachable */
 .rnav{position:absolute; top:15px; right:18px; display:flex; gap:6px}
@@ -1914,6 +2074,48 @@ html[data-quiet="1"] .toast{background:#33333B; color:var(--ink)}
   line-height:1.45; margin-top:2px; white-space:normal}
 .hmi.ext .hmgo{flex:0 0 13px; color:var(--ink3); margin-top:2px}
 
+/* The options menu, redrawn on 2026-11-05. It was a list of bare labels with
+   a pill badge sitting on its heading. Now every item is an icon chip, a name
+   and one line saying what it opens, the groups sit on a soft inset with room
+   between them, and the two display settings are a pair of tiles at the foot.
+   The chips take the chapter tints, so the menu has the same colours as the
+   rail. Scoped to #hMore: the account menu keeps its own simpler rows. */
+#hMore .hmp{width:min(340px, calc(100vw - 24px)); min-width:0; padding:8px; border-radius:18px;
+  box-shadow:0 2px 6px rgba(41,78,73,.06), 0 18px 44px rgba(41,78,73,.14)}
+#hMore .hmg{padding:2px 0 4px}
+#hMore .hmg + .hmg, #hMore .hmg + .hmset{border-top:1px solid var(--line2); margin-top:4px; padding-top:6px}
+#hMore .hmg[hidden]{display:none}
+#hMore .hmlab{padding:8px 10px 6px; font-size:calc(10px * var(--step)); letter-spacing:.08em; color:var(--ink3)}
+#hMore .hmlab span{margin-left:auto; padding:2px 8px; border-radius:999px; letter-spacing:.02em;
+  text-transform:none; font-size:calc(10px * var(--step)); font-weight:680;
+  background:var(--c-sum-t); color:var(--c-sum)}
+#hMore .hmi{gap:12px; padding:8px 10px; border-radius:12px; align-items:center; text-decoration:none;
+  transition:background .14s}
+#hMore .hmc{flex:0 0 34px; width:34px; height:34px; border-radius:var(--ico-r); display:grid; place-items:center;
+  background:var(--c-case-t); color:var(--c-case)}
+#hMore .hmc svg{opacity:1; color:inherit; flex:none}
+#hMore .c-read .hmc{background:var(--c-learn-t); color:var(--c-learn)}
+#hMore .c-res .hmc{background:var(--live-t); color:var(--live-ink)}
+#hMore .hmi.ext .hmc{background:var(--c-sum-t); color:var(--c-sum)}
+#hMore .hmx{flex:1 1 auto; min-width:0; display:block}
+#hMore .hmx b{display:block; font-size:calc(12.8px * var(--step)); font-weight:680; color:var(--ink); line-height:1.3}
+#hMore .hmx span{display:block; margin-top:2px; font-size:calc(11px * var(--step)); font-weight:500;
+  color:var(--ink3); line-height:1.4; white-space:normal}
+#hMore .hmi.ext .hmgo{align-self:center; margin:0; color:var(--ink3)}
+#hMore .hmi:hover{background:var(--sunk)}
+#hMore .hmi:hover .hmc{transform:translateY(-1px)}
+#hMore .hmi[aria-pressed=true]{background:var(--brand-t)}
+#hMore .hmi[aria-pressed=true] .hmx b{color:var(--brand-ink)}
+#hMore .hmi:focus-visible,#hMore .hms:focus-visible{outline:2px solid var(--brand); outline-offset:1px}
+#hMore .hmset{display:grid; grid-template-columns:1fr 1fr; gap:6px; padding:8px 2px 2px}
+#hMore .hms{display:flex; align-items:center; gap:8px; padding:10px 11px; border-radius:12px;
+  border:0; background:var(--sunk); cursor:pointer; font:inherit; text-align:left;
+  font-size:calc(11.8px * var(--step)); font-weight:640; color:var(--ink2)}
+#hMore .hms svg{flex:0 0 16px; color:var(--brand-ink)}
+#hMore .hms:hover{background:var(--brand-t); color:var(--ink)}
+@media(prefers-reduced-motion:reduce){ #hMore .hmi:hover .hmc{transform:none} }
+html[data-motion="reduced"] #hMore .hmi:hover .hmc{transform:none}
+
 /* The brief: what arrives in the thread and sits on the panel. One row, two
    lines, two controls. The full card is what the violet button opens. */
 .wcase.mini{display:flex; align-items:flex-start; gap:11px; padding:12px 13px 13px;
@@ -2113,6 +2315,8 @@ html[data-quiet="1"] .toast{background:#33333B; color:var(--ink)}
   .jp,.jp-card{transition:none} .jp-row:active{transform:none}
 }
 @media(max-width:700px){
+  .lrn .lrn-t{display:none} .lrn{padding:0 5px; height:38px}
+  .rlearn{position:static; margin-top:12px; max-width:none}
   /* The panel comes in from the right as a drawer and stops short of the left
      edge, so the thread stays visible behind it and it is obvious what the
      panel is sitting on top of. */
@@ -2238,6 +2442,12 @@ html[data-quiet="1"] .toast{background:#33333B; color:var(--ink)}
     <button type="button" role="tab" data-tab="inputs" aria-selected="true">Patient inputs</button>
     <button type="button" role="tab" data-tab="advisory" aria-selected="false">Advisory &amp; summary</button>
   </div>
+  <!-- the background is always one press away once there is a diagnosis -->
+  <button class="lrn" type="button" id="bLearn" hidden aria-pressed="false"
+    title="Steps 1 to 4: where it starts, how it is diagnosed, genetics and markers, how it spreads">
+    <span class="lrn-i"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10.3 5 7.8 4.3 4 4.5v13c3.8-.2 6.3.5 8 2 1.7-1.5 4.2-2.2 8-2v-13c-3.8-.2-6.3.5-8 2zM12 6.5v13"/></svg></span>
+    <span class="lrn-t"><b id="lrnName">Learn about it</b><span>Steps 1 to 4, four short reads</span></span>
+  </button>
   <span class="hsp"></span>
   <span class="hcase" id="hCase"></span>
   <div class="hpanels right">
@@ -2276,19 +2486,23 @@ html[data-quiet="1"] .toast{background:#33333B; color:var(--ink)}
   <div class="hmore" id="hMore">
     <button class="hb hmb" type="button" id="bMore" aria-haspopup="true" aria-expanded="false" aria-label="Options"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg><span>Options</span></button>
     <div class="hmp" role="menu" aria-label="More options">
+      <div class="hmg" id="hmgCase">
       <p class="hmlab">Your own case</p>
-      <button class="hmi" type="button" id="bRead" role="menuitem"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M8 8l4-4 4 4M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"/></svg><span>Read my report</span></button>
-      <button class="hmi" type="button" id="bSave" role="menuitem"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Coming back later</span></button>
-      <i class="hmd"></i>
-      <button class="hmi" type="button" id="bKb" role="menuitem"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5zM19 18v3H6.5"/></svg><span>Knowledge base</span></button>
-      <button class="hmi" type="button" id="bRes" role="menuitem"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6.5L4.8 18a2.6 2.6 0 0 0 2.2 4h10a2.6 2.6 0 0 0 2.2-4L14 9.5V3M7.5 15h9"/></svg><span>Research and new methods</span></button>
-      <i class="hmd"></i>
-      <div class="hmtwin" id="hmTwin" hidden>
-        <p class="hmlab">On the clinician trainer <span>education only</span></p>
+      <button class="hmi c-case" type="button" id="bRead" role="menuitem"><i class="hmc"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M8 8l4-4 4 4M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"/></svg></i><span class="hmx"><b>Read my report</b><span>Fills in what it can read, here in the page</span></span></button>
+      <button class="hmi c-case" type="button" id="bSave" role="menuitem"><i class="hmc"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></i><span class="hmx"><b>Coming back later</b><span>What happens to anything you type</span></span></button>
       </div>
-      <i class="hmd" id="hmdTwin" hidden></i>
-      <button class="hmi" type="button" id="bText"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V5h11v2M9.5 5v14M7 19h5M17 12.5V11h5v1.5M19.5 11v8M18 19h3"/></svg><span>Text and display</span></button>
-      <button class="hmi" type="button" id="bQuiet"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Quiet mode</span></button>
+      <div class="hmg">
+      <p class="hmlab">Explore</p>
+      <button class="hmi c-read" type="button" id="bKb" role="menuitem"><i class="hmc"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5zM19 18v3H6.5"/></svg></i><span class="hmx"><b>Knowledge base</b><span>Plain explainers, searchable</span></span></button>
+      <button class="hmi c-res" type="button" id="bRes" role="menuitem"><i class="hmc"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6.5L4.8 18a2.6 2.6 0 0 0 2.2 4h10a2.6 2.6 0 0 0 2.2-4L14 9.5V3M7.5 15h9"/></svg></i><span class="hmx"><b>Research and new methods</b><span>What is being tried, by how far it has got</span></span></button>
+      </div>
+      <div class="hmg hmtwin" id="hmTwin" hidden>
+        <p class="hmlab">On the clinician trainer <span>Education only</span></p>
+      </div>
+      <div class="hmset">
+        <button class="hms" type="button" id="bText"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V5h11v2M9.5 5v14M7 19h5M17 12.5V11h5v1.5M19.5 11v8M18 19h3"/></svg><span>Text and display</span></button>
+        <button class="hms" type="button" id="bQuiet"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Quiet mode</span></button>
+      </div>
     </div>
   </div>
   <!-- uploading and the account, top right; shown only where a backend is built in -->
@@ -2352,6 +2566,10 @@ html[data-quiet="1"] .toast{background:#33333B; color:var(--ink)}
       <h3 id="rTitle">Who you are</h3>
       <p id="rBlurb"></p>
       <div class="chap" id="rChap" hidden></div>
+      <button class="rlearn" type="button" id="rLearn" hidden>
+        <span class="lrn-i"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10.3 5 7.8 4.3 4 4.5v13c3.8-.2 6.3.5 8 2 1.7-1.5 4.2-2.2 8-2v-13c-3.8-.2-6.3.5-8 2zM12 6.5v13"/></svg></span>
+        <span><small>New to this?</small><b id="rLearnName">Learn about it first</b><small>Steps 1 to 4, nothing to answer</small></span>
+      </button>
       <div class="rnav" id="rNav" hidden>
         <button type="button" id="rPrev" aria-label="Previous step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
         <button type="button" id="rNext" aria-label="Next step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
@@ -4617,11 +4835,13 @@ var PLATES = {
       return;
     }
     say(['<b>' + c.n + (c.q ? ', ' + c.q.toLowerCase() : '') + '.</b> ' + honest,
+      'Steps 1 to 4 are there to explain it: where it starts, how it is diagnosed, the markers, and how it spreads. They are always one press away, under "Learn about ' + dxShort(c) + '" at the top.',
       'What would you like help with? Four things cover most of why people come here.'],
       null, function (m) {
         chipsOn(m, INTENTS.map(function (i) {
           return { t: i.t, go: function () { setIntent(i); } };
-        }).concat([{ t: 'Just walk me through everything', cls: 'thin', go: function () {
+        }).concat([{ t: 'Learn about ' + dxShort(c) + ' first', go: learnFirst },
+          { t: 'Just walk me through everything', cls: 'thin', go: function () {
           me('Walk me through everything'); S.intent = null; S.onb = false; paintAll(); goStep(0); } }]));
       });
   }
@@ -4757,8 +4977,10 @@ var PLATES = {
       : (f.kind === 'search' ? 'All sixty-one are listed on the right. Search, or browse by part of the body.'
       : 'The options are on the right. Pick whichever is closest.'));
     ps.push('<span class="toright">' + where + '</span>');
-    var m = (S.step === 4 && !S.said.up5 && !Object.keys(S.from).length && S.cancer && S.cancer.full) ? null
-      : guide(ps, { title: f.t, tag: 'Step ' + s.n + ' of 12 · ' + s.t + ' · question ' + (S.fi + 1) + ' of ' + s.ids.length });
+    /* The first time the questions start, the two ways in are put first,
+       and the question waits until one is chosen. */
+    if (S.step === 4 && !S.said.up5 && wantEntry()) { S.said.up5 = 1; return askEntry(); }
+    var m = guide(ps, { title: f.t, tag: 'Step ' + s.n + ' of 12 · ' + s.t + ' · question ' + (S.fi + 1) + ' of ' + s.ids.length });
     var list = [];
     if (f.kind === 'text') { list.push({ t: 'Type it below instead', cls: 'thin', go: function () { $('#say').focus(); } }); }
     if (f.kind === 'search') {
@@ -4768,18 +4990,65 @@ var PLATES = {
     if (!f.waits && f.kind !== 'text') { list.push({ t: 'I do not know this one', cls: 'thin', go: function () { skip(); } }); }
     else if (f.kind !== 'text') { list.push({ t: 'Nothing to add', cls: 'thin', go: function () { skip(); } }); }
     list.push({ t: 'Why does this one matter?', cls: 'thin', go: function () { whyChat(f); } });
-    /* Reading a report fills most of these at once, so the first time the
-       questions start it is offered before the one-at-a-time route. */
-    if (S.step === 4 && !S.said.up5 && !Object.keys(S.from).length && S.cancer && S.cancer.full) {
-      S.said.up5 = 1;
-      list.unshift({ t: ACCT ? 'Upload case files first' : 'Read my report first', cls: 'key', go: function () { reportDialog(); } });
-      ps.splice(ps.length - 1, 0, '<span style="color:var(--ink3)">If you have a pathology or molecular report, reading it first fills in what it can. Then only the gaps are left to answer.</span>');
-      m = null;
-    }
-    if (!m) { m = guide(ps, { title: f.t, tag: 'Step ' + s.n + ' of 12 · ' + s.t + ' · question ' + (S.fi + 1) + ' of ' + s.ids.length }); }
     openRight(); flash(f.id);
     chipsOn(m, list);
     paintAll();
+  }
+  /* Two ways to fill in steps 5 to 9 --------------------------------------
+     Asked upfront, as the reading ends, rather than as a small row above the
+     first question. Until a report has been read or "by hand" was chosen,
+     the top of every question step is the same choice, drawn large. */
+  function wantEntry() {
+    return !!(S.cancer && S.cancer.full && !Object.keys(S.from).length && !S.said.manual);
+  }
+  function byHand() {
+    S.said.manual = 1; S.said.up5 = 1;
+    me('I will enter them myself');
+    if (S.step < 4 || STEPS[S.step].reads) { goStep(4); } else { paintRight(); askCurrent(); }
+  }
+  function upFirst() {
+    S.said.up5 = 1;
+    if (S.step < 4 || STEPS[S.step].reads) { goStep(4); }
+    reportDialog();
+  }
+  function askEntry() {
+    var s = curStep();
+    var m = guide(['Steps 5 to 9 are about your own case. There are two ways to fill them in.',
+      ACCT ? '<b>Upload your case files</b>, and it fills in what they say across all five steps. Then only the gaps are left.'
+           : '<b>Read your report</b>, and it fills in what it can. The file is read here in the page and never sent anywhere. Then only the gaps are left.',
+      '<b>Or enter the details yourself</b>, one question at a time. Anything you do not know can stay blank.',
+      '<span class="toright">Both are at the top of the panel on the right.</span>'],
+      { title: 'Upload, or enter it yourself?', tag: 'Step ' + s.n + ' of 12 · ' + s.t });
+    openRight(); paintAll();
+    chipsOn(m, [
+      { t: ACCT ? 'Upload my case files' : 'Read my report', cls: 'key', go: upFirst },
+      { t: 'Enter them by hand', go: byHand }
+    ], 'Two ways to fill in your case');
+  }
+  function entryNode() {
+    var E = sec('Two ways to fill this in', 'speak', null, 'open entry');
+    var g = el('div', 'ent');
+    [{ k: 'up', t: ACCT ? 'Upload case files' : 'Read my report',
+       d: ACCT ? 'Pathology, molecular or clinic reports. It fills in what they say across steps 5 to 9, and you check each one before it is kept.'
+               : 'Paste it or drop the file in. It fills in what it can read across steps 5 to 9, and you check each one before it is kept.',
+       cta: ACCT ? 'Upload files' : 'Read a report', go: upFirst },
+     { k: 'hand', t: 'Enter the details myself',
+       d: 'One question at a time, in the chat or right here. Anything you do not know can stay blank.',
+       cta: 'Start with the first question', go: byHand }].forEach(function (w) {
+      var b = el('button', 'entc ' + w.k); b.type = 'button';
+      var ic = el('span', 'entc-i');
+      ic.innerHTML = w.k === 'up'
+        ? '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M8 8l4-4 4 4M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16"/></svg>'
+        : '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4"/></svg>';
+      b.appendChild(ic);
+      b.appendChild(el('b', null, w.t));
+      b.appendChild(el('span', 'entc-d', w.d));
+      b.appendChild(el('span', 'entc-go', w.cta));
+      b.addEventListener('click', w.go);
+      g.appendChild(b);
+    });
+    E.appendChild(g);
+    return E;
   }
   function whyChat(f) {
     var m = guide([f.why], { title: 'Why ' + f.tech + ' matters' });
@@ -4818,7 +5087,7 @@ var PLATES = {
       : s.n === 12
       ? 'The part of the road you are on, further down the same page. Pick a different part on the road above it to read that one instead.'
       : (s.chap === 4
-        ? 'Last of the four. The page is on the right, and after this the questions start being about you.'
+        ? 'Last of the four. After this the questions are about you, and there are two ways to answer them: upload your case files and let it fill in what they say, or enter the details yourself.'
         : 'The page is on the right, with the few things it leaves out underneath it. Nothing here needs an answer.'));
     var m = guide(ps, { title: s.t,
       tag: (s.chap ? 'Chapter ' + s.chap + ' of 4 · ' : '')
@@ -4840,7 +5109,10 @@ var PLATES = {
       list.push({ t: 'Skip the background, start on my own case', cls: 'thin', go: function () {
         me('Skip the background'); goStep(4); } });
     }
-    if (S.step < STEPS.length - 1) {
+    if (s.chap === 4 && wantEntry()) {
+      list.push({ t: ACCT ? 'Upload my case files' : 'Read my report', cls: 'key', go: upFirst });
+      list.push({ t: 'Enter my details by hand', cls: 'key', go: byHand });
+    } else if (S.step < STEPS.length - 1) {
       var nx = STEPS[S.step + 1];
       list.push({ t: 'Go on to step ' + nx.n + ', ' + nx.t.toLowerCase(), cls: 'key', go: function () { goStep(S.step + 1); } });
     } else {
@@ -5776,10 +6048,8 @@ var PLATES = {
     /* uploading is always one press away, signed in or not */
     $('#bUp').hidden = false;
     $('#bUp').addEventListener('click', function () { closeMe(); reportDialog(); });
-    var lab = $('#bRead') && $('#bRead').previousElementSibling;
-    if (lab && lab.classList.contains('hmlab')) { lab.hidden = true; lab.style.display = 'none'; }
-    var dv = $('#bSave') && $('#bSave').nextElementSibling;
-    if (dv && dv.classList.contains('hmd')) { dv.hidden = true; }
+    /* the group's heading goes with them */
+    if ($('#hmgCase')) { $('#hmgCase').hidden = true; }
     $('#hMe').hidden = false;
     $('#bMe').addEventListener('click', function (e) {
       e.stopPropagation();
@@ -6106,7 +6376,8 @@ var PLATES = {
     topRight();
     window.setTimeout(function () {
       var n = $('[data-f="' + id + '"]');
-      if (n) { n.scrollIntoView({ block: 'center', behavior: 'smooth' }); n.classList.add('at'); }
+      /* while the two ways in are on top, they are what the panel shows first */
+      if (n) { if (!$('#rBody .ent')) { n.scrollIntoView({ block: 'center', behavior: 'smooth' }); } n.classList.add('at'); }
     }, 90);
   }
 
@@ -6657,7 +6928,34 @@ var PLATES = {
     N.appendChild(el('p', 'stepwhere', 'Nothing here has to be finished before you move on, and you can come back to any step at any time.'));
     return N;
   }
+  /* The background, from anywhere. Once there is a diagnosis the header
+     carries it, and while the panel asks what you came for, so does the top
+     of the panel. Both go to step 1, which is the start of the one page. */
+  function dxShort(c) {
+    var n = c.n.replace(/,.*$/, '');
+    return /^[A-Z][a-z]/.test(n) ? n.charAt(0).toLowerCase() + n.slice(1) : n;
+  }
+  function paintLearn() {
+    var b = $('#bLearn'), r = $('#rLearn'); if (!b) { return; }
+    b.hidden = !S.cancer;
+    if (S.cancer) {
+      $('#lrnName').textContent = 'Learn about ' + dxShort(S.cancer);
+      b.setAttribute('aria-label', 'Learn about ' + dxShort(S.cancer) + ', steps 1 to 4');
+      $('#rLearnName').textContent = 'Learn about ' + dxShort(S.cancer) + ' first';
+    }
+    b.setAttribute('aria-pressed', (!S.onb && S.tab === 'inputs' && curStep().chap) ? 'true' : 'false');
+    r.hidden = !(S.onb === 'intent' && S.cancer);
+  }
+  function learnFirst() {
+    clearChips();
+    if (S.tab !== 'inputs') { setTab('inputs'); }
+    if (S.onb) { me('Tell me about it first'); S.onb = false; }
+    goStep(0);
+  }
+  $('#bLearn').addEventListener('click', learnFirst);
+  $('#rLearn').addEventListener('click', learnFirst);
   function paintNav() {
+    paintLearn();
     var n = $('#rNav');
     if (S.onb) { n.hidden = true; return; }
     n.hidden = false;
@@ -6753,64 +7051,187 @@ var PLATES = {
     if (has('when') && WHEN_STAGE[S.v.when] !== undefined) { return { i: WHEN_STAGE[S.v.when], how: 'told' }; }
     return { i: 0, how: 'none' };
   }
-  function journeyInto(d) {
-    var sn = stageNow();
-    var hh = el('h4', null, 'The road, all seven parts'); d.appendChild(hh);
+  /* The pathway map, as stage columns. Built on 2026-11-05 to replace a
+     vertical list that read as one long column of prose. It follows the
+     trainer's own layout: the road left to right, one column per part, and
+     inside each column the same four kinds of card, each labelled: the
+     results that part uses (with what you have recorded), what gets decided,
+     what to have in hand, and questions to take in. It ranks nothing and
+     never says "needed now": a result is recorded, not recorded yet, or one
+     you said is not known yet. */
+  var STAGE_FIELDS = {
+    found: ['location', 'focality', 'mimic'],
+    diagnose: ['idh', 'h3', 'tert', 'chr710', 'codel', 'mgmt', 'ki67'],
+    surgery: ['resection', 'steroid'],
+    plan: ['age', 'kps', 'comorb', 'ngs', 'egfr', 'rnaseq'],
+    treat: ['ttf', 'weeks', 'baseline', 'rcbv', 'pet'],
+    after: ['serial', 'newlesion', 'confirm'],
+    back: ['pattern', 'months', 'rano', 'lomustine', 'mmr', 'lepto', 'il13', 'survivin']
+  };
+  var PB_KINDS = [
+    { k: 'res', t: 'Results', art: '<path d="M9 3h6M10 3v6.5L4.8 18a2.6 2.6 0 0 0 2.2 4h10a2.6 2.6 0 0 0 2.2-4L14 9.5V3"/>' },
+    { k: 'dec', t: 'Decisions', art: '<path d="M6 3v6a6 6 0 0 0 6 6h6M15 12l3 3-3 3M6 21v-4"/>' },
+    { k: 'need', t: 'To have in hand', art: '<path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5"/>' },
+    { k: 'ask', t: 'Questions', art: '<path d="M9.2 9a3 3 0 1 1 4.3 2.7c-.9.4-1.5 1.2-1.5 2.2V15M12 18.5v.01"/><circle cx="12" cy="12" r="9.2"/>' }
+  ];
+  function pbIcon(k) {
+    var x = PB_KINDS.filter(function (z) { return z.k === k; })[0];
+    return '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + x.art + '</svg>';
+  }
+  function recurOn() {
+    return (has('when') && S.v.when === 'back') || FIELDS.some(function (f) { return f.g === 'recur' && has(f.id); });
+  }
+  function shutWide() { var lb = $('.pbx'); if (lb) { lb.remove(); } }
+  function toDetail(j) {
+    if (typeof j === 'number') { S.stage = j; }
+    shutWide();
+    var di = STEPS.findIndex(function (z) { return z.n === 12; });
+    if (S.step === di) { paintRight(); landOnPart(); } else { goStep(di); }
+  }
+  function boardNode(wide) {
+    var sn = stageNow(), c = S.cancer, full = !!(c && c.full), recur = recurOn();
+    var w = el('div', 'pbw' + (wide ? ' wide' : ''));
+    var tools = el('div', 'pb-tools');
+    var leg = el('div', 'pb-leg'); leg.setAttribute('aria-label', 'What the cards are');
+    PB_KINDS.forEach(function (x) {
+      if (x.k === 'res' && !full) { return; }
+      var t = el('span', 'pb-tag k-' + x.k); t.innerHTML = pbIcon(x.k); t.appendChild(el('span', null, x.t)); leg.appendChild(t);
+    });
+    tools.appendChild(leg);
+    if (!wide) {
+      var big = el('button', 'pb-big'); big.type = 'button';
+      big.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+      big.appendChild(el('span', null, 'Open full width'));
+      big.addEventListener('click', boardWide);
+      tools.appendChild(big);
+    }
+    w.appendChild(tools);
     if (sn.how === 'none') {
       var ask = el('p', 'jr-ask');
       ask.appendChild(document.createTextNode('Nothing is marked yet, because you have not said where things are. '));
       var go = el('button', 'jr-link', 'Tell me where things are'); go.type = 'button';
       go.addEventListener('click', function () {
+        shutWide();
         var si = STEPS.findIndex(function (x) { return x.ids.indexOf('when') !== -1; });
         S.onb = false; goField(si, STEPS[si].ids.indexOf('when'));
       });
       ask.appendChild(go);
-      d.appendChild(ask);
+      w.appendChild(ask);
     }
-    var open = sitData().open || [];
-    var ol = el('ol', 'jr');
+    var board = el('div', 'pb'); board.setAttribute('role', 'list'); board.tabIndex = 0;
+    board.setAttribute('aria-label', 'The road, all seven parts');
+    var steps = el('div', 'pb-steps');
     STAGES.forEach(function (x, j) {
       var state = sn.how === 'none' ? 'ahead' : (j < sn.i ? 'past' : (j === sn.i ? 'now' : 'ahead'));
-      var li = el('li', 'jr-' + state);
-      li.setAttribute('data-stage', x.id);
-      var node = el('span', 'jr-n'); node.innerHTML = solid(x.art, 12); li.appendChild(node);
-      var body = el('div', 'jr-b');
-      var top = el('div', 'jr-t');
-      top.appendChild(el('b', null, x.t));
-      top.appendChild(el('span', 'jr-s', state === 'now' ? (sn.how === 'picked' ? 'The part you picked' : 'You are here')
-        : (state === 'past' ? 'Behind you' : (sn.how === 'none' ? x.when : 'Ahead, ' + x.when))));
-      body.appendChild(top);
-      if (state === 'now') {
-        body.appendChild(el('p', null, x.lead));
-        var dl = el('p', 'jr-k', 'What gets decided here'); body.appendChild(dl);
-        var ul = el('ul'); x.decide.forEach(function (t) { ul.appendChild(el('li', null, t)); }); body.appendChild(ul);
-        /* the results this part waits on, only where results are what it waits on */
-        if ((x.id === 'diagnose' || x.id === 'plan') && open.length) {
-          body.appendChild(el('p', 'jr-k', 'Results still open that this part waits on'));
-          var ul2 = el('ul'); open.slice(0, 4).forEach(function (f) { ul2.appendChild(el('li', null, cap(f.tech))); });
-          body.appendChild(ul2);
-        }
-      } else {
-        body.appendChild(el('p', 'jr-one', 'Decides ' + x.decide[0].charAt(0).toLowerCase() + x.decide[0].slice(1) + '.'));
-      }
-      var more = el('button', 'jr-link', state === 'now' ? 'Read this part in detail' : (sn.how === 'none' ? 'Read this part' : 'Look at this part instead'));
-      more.type = 'button';
-      more.addEventListener('click', function () {
-        if (state !== 'now') { S.stage = j; }
-        var di = STEPS.findIndex(function (z) { return z.n === 12; });
-        if (S.step === di) { paintRight(); landOnPart(); } else { goStep(di); }
+      var chip = el('button', 'pb-s pb-' + state); chip.type = 'button';
+      chip.appendChild(el('i', null, String(j + 1)));
+      chip.appendChild(el('span', null, x.short || x.t));
+      if (state === 'now') { chip.setAttribute('aria-current', 'step'); }
+      chip.addEventListener('click', function () {
+        var cc = board.querySelector('[data-stage="' + x.id + '"]');
+        if (cc) { board.scrollTo({ left: cc.offsetLeft - board.offsetLeft - 2, behavior: 'smooth' }); }
       });
-      body.appendChild(more);
-      li.appendChild(body);
-      ol.appendChild(li);
+      steps.appendChild(chip);
+
+      var col = el('section', 'pb-col pb-' + state);
+      col.setAttribute('role', 'listitem'); col.setAttribute('data-stage', x.id);
+      var hd = el('header', 'pb-h');
+      var nd = el('span', 'pb-n'); nd.innerHTML = solid(x.art, 13); hd.appendChild(nd);
+      var ht = el('div');
+      ht.appendChild(el('small', null, 'Part ' + (j + 1) + ', ' + x.when));
+      ht.appendChild(el('b', null, x.t));
+      hd.appendChild(ht);
+      col.appendChild(hd);
+      var stt = state === 'now' ? (sn.how === 'picked' ? 'The part you picked' : 'You are here')
+        : (state === 'past' ? 'Behind you' : (sn.how === 'none' ? '' : 'Ahead'));
+      if (stt) { col.appendChild(el('span', 'pb-st', stt)); }
+      if (x.id === 'back' && !recur) {
+        var iff = el('div', 'pb-card k-if');
+        iff.appendChild(el('p', null, 'Only if it comes back. Nothing in this part applies unless it does, so no results are listed here.'));
+        col.appendChild(iff);
+      } else {
+        var ids = full ? (STAGE_FIELDS[x.id] || []) : [];
+        if (ids.length) {
+          var rc = el('div', 'pb-card k-res');
+          var rk = el('p', 'pb-k'); rk.innerHTML = pbIcon('res'); rk.appendChild(el('span', null, 'Results this part uses')); rc.appendChild(rk);
+          ids.forEach(function (id) {
+            var f = FIELD(id); if (!f) { return; }
+            var r = el('button', 'pb-r'); r.type = 'button';
+            r.appendChild(el('span', 'pb-rn', cap(f.tech)));
+            var v = has(id) ? label(f) : null;
+            r.appendChild(el('span', 'pb-v ' + (v ? 'got' : (S.waved[id] ? 'waved' : 'open')),
+              v ? v : (S.waved[id] ? 'You said not known yet' : 'Not recorded yet')));
+            r.title = v ? 'Change this answer' : 'Answer this one';
+            r.addEventListener('click', function () {
+              shutWide();
+              var si = STEPS.findIndex(function (st) { return st.ids.indexOf(id) !== -1; });
+              if (si !== -1) { goField(si, STEPS[si].ids.indexOf(id)); }
+            });
+            rc.appendChild(r);
+          });
+          col.appendChild(rc);
+        }
+      }
+      [['dec', 'What gets decided', x.decide], ['need', 'What to have in hand', x.need], ['ask', 'Questions to take in', x.qs]].forEach(function (pr) {
+        if (!(pr[2] || []).length || (x.id === 'back' && !recur && pr[0] !== 'dec')) { return; }
+        var cd = el('div', 'pb-card k-' + pr[0]);
+        var kk = el('p', 'pb-k'); kk.innerHTML = pbIcon(pr[0]); kk.appendChild(el('span', null, pr[1])); cd.appendChild(kk);
+        var ul = el('ul'); pr[2].forEach(function (t) { ul.appendChild(el('li', null, t)); }); cd.appendChild(ul);
+        if (pr[0] === 'ask') {
+          var kept = pr[2].every(function (q) { return S.qs.indexOf(q) !== -1; });
+          var kq = el('button', 'jr-keep', kept ? 'On your list' : 'Keep these on my list'); kq.type = 'button';
+          kq.disabled = kept;
+          kq.addEventListener('click', function () {
+            pr[2].forEach(function (q) { if (S.qs.indexOf(q) === -1) { S.qs.push(q); } });
+            kq.textContent = 'On your list'; kq.disabled = true; paintLeft();
+          });
+          cd.appendChild(kq);
+        }
+        col.appendChild(cd);
+      });
+      var more = el('button', 'jr-link pb-more', state === 'now' ? 'Read this part in detail' : 'Look at this part in detail');
+      more.type = 'button';
+      more.addEventListener('click', function () { toDetail(state === 'now' ? undefined : j); });
+      col.appendChild(more);
+      board.appendChild(col);
     });
-    d.appendChild(ol);
+    w.appendChild(steps);
+    w.appendChild(board);
     if (sn.how === 'picked' && has('when')) {
       var bk2 = el('button', 'jr-link', 'Go back to where you said you are'); bk2.type = 'button';
-      bk2.addEventListener('click', function () { S.stage = undefined; paintRight(); landOnPart(); });
-      d.appendChild(bk2);
+      bk2.addEventListener('click', function () { S.stage = undefined; shutWide(); paintRight(); landOnPart(); });
+      w.appendChild(bk2);
     }
-    d.appendChild(el('p', 'lnote', 'Where you are comes from your own answer about where things are. No treatment on this road is ranked or recommended here; that is a conversation for your care team.'));
+    w.appendChild(el('p', 'lnote', 'Where you are comes from your own answer about where things are. No treatment on this road is ranked or recommended here; that is a conversation for your care team.'));
+    /* start the board on the part you are on */
+    window.setTimeout(function () {
+      var now = board.querySelector('.pb-col.pb-now');
+      if (now && board.scrollWidth > board.clientWidth) { board.scrollLeft = Math.max(0, now.offsetLeft - board.offsetLeft - 2); }
+    }, 0);
+    return w;
+  }
+  function journeyInto(d) {
+    d.appendChild(el('h4', null, 'The road, all seven parts'));
+    d.appendChild(boardNode(false));
+  }
+  /* the same board across the whole screen */
+  function boardWide() {
+    var sc = el('div', 'pbx'); sc.setAttribute('role', 'dialog'); sc.setAttribute('aria-label', 'Your pathway, all seven parts');
+    var inner = el('div', 'pbx-i');
+    var hd = el('div', 'pbx-h');
+    hd.appendChild(el('b', null, 'Your pathway, all seven parts'));
+    var x = el('button', 'pbx-x', 'Close'); x.type = 'button';
+    hd.appendChild(x);
+    inner.appendChild(hd);
+    inner.appendChild(boardNode(true));
+    sc.appendChild(inner);
+    function shut() { sc.remove(); document.removeEventListener('keydown', esc); }
+    function esc(e) { if (e.key === 'Escape') { shut(); } }
+    x.addEventListener('click', shut);
+    sc.addEventListener('click', function (e) { if (e.target === sc) { shut(); } });
+    document.addEventListener('keydown', esc);
+    document.body.appendChild(sc);
+    x.focus();
   }
 
   function paintRight() {
@@ -6862,7 +7283,7 @@ var PLATES = {
       /* Reading a report is the alternative to this whole section, so it is
          offered here rather than only on the first screen, which is long gone
          by the time somebody is looking at twelve questions. */
-      F.appendChild(readRow());
+      if (wantEntry()) { h.appendChild(entryNode()); } else { F.appendChild(readRow()); }
       /* After a report, the answers it gave fold into one list and only the
          questions still open are drawn as cards. One press shows them all. */
       var fromRep = s.ids.filter(function (id) { return S.from[id] && has(id); });
@@ -7309,8 +7730,43 @@ var PLATES = {
     w.setAttribute('title', 'Evidence stage ' + (r + 1) + ' of ' + RLADDER.length + ': ' + RLADDER[r].d);
     return w;
   }
+  /* The two panes the menu opens are not tabs, so nothing in the header
+     said how to leave them. Each starts with a way back to the chat. */
+  function paneBack() {
+    var b = el('button', 'paneback'); b.type = 'button';
+    b.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>';
+    b.appendChild(el('span', null, 'Back to the chat'));
+    var w = S.onb ? null : curStep();
+    if (w) { b.appendChild(el('small', null, 'Step ' + w.n + ', ' + w.t.toLowerCase())); }
+    b.addEventListener('click', function () { setTab('inputs'); });
+    return b;
+  }
+  /* the way to a person about research, drawn as the middle of the pane */
+  function researchTalk() {
+    var t = el('section', 'rs-talk');
+    var ic = el('span', 'rs-talk-i');
+    ic.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26" aria-hidden="true"><path d="M8.6 3a3.8 3.8 0 1 0 0 7.6A3.8 3.8 0 0 0 8.6 3zm7.6 1.4a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2zM8.6 12.3c-3.4 0-6.6 1.8-6.6 4.2v2.3a1.3 1.3 0 0 0 1.3 1.3h10.6a1.3 1.3 0 0 0 1.3-1.3v-2.3c0-2.4-3.2-4.2-6.6-4.2zm8.9.5a9 9 0 0 1 .4.3 5.6 5.6 0 0 1 1.9 3.4v2.3a3.7 3.7 0 0 1-.2 1.1h1.7a1.3 1.3 0 0 0 1.3-1.3v-2a4 4 0 0 0-2.4-3.3 7.7 7.7 0 0 0-2.7-.5z"/></svg>';
+    t.appendChild(ic);
+    t.appendChild(el('h2', null, 'Talk to us about new treatments and research'));
+    t.appendChild(el('p', null, 'Ask about a new method you have read about, a specific trial, or anything on this page you would like explained. '
+      + 'A person reads it. It does not replace your care team, and it is not for anything urgent.'));
+    var row = el('div', 'rs-talk-b');
+    var go = el('button', 'rs-talk-go', 'Talk to us about research'); go.type = 'button';
+    go.addEventListener('click', function () {
+      var r = routeBy('research');
+      openHelper(); startRequest(r);
+      RQ.need = HP_ASK.research.filter(function (n) { return n.id === 'second'; })[0];
+      hpShow('more');
+    });
+    var tr = el('button', 'rs-talk-alt', 'Help finding a trial'); tr.type = 'button';
+    tr.addEventListener('click', function () { openHelper(); startRequest(routeBy('research')); });
+    row.appendChild(go); row.appendChild(tr);
+    t.appendChild(row);
+    return t;
+  }
   function paintResearch() {
     var h = $('#resBody'); h.textContent = '';
+    h.appendChild(paneBack());
     h.appendChild(el('h1', null, 'Research and new methods'));
     h.appendChild(el('p', 'lede', 'What is being tried beyond the usual treatment, put on a ladder by how far the evidence has got. '
       + 'This is research, not treatment, and it is not a plan for you. Anything here is for a conversation with your care team.'));
@@ -7327,6 +7783,7 @@ var PLATES = {
       lad.appendChild(li);
     });
     h.appendChild(lad);
+    h.appendChild(researchTalk());
 
     var c = S.cancer;
     var mine = c ? RESEARCH.filter(function (r) { return r.dx.indexOf(c.id) !== -1; }) : [];
@@ -7503,6 +7960,7 @@ var PLATES = {
                ['centre', 'Centres and how to judge one'], ['trial', 'Trials'], ['help', 'Help and people'], ['meta', 'What sits behind this']];
   function paintKb() {
     var h = $('#kbBody'); h.textContent = '';
+    h.appendChild(paneBack());
     h.appendChild(el('h1', null, 'Knowledge base'));
     h.appendChild(el('p', 'lede', 'Everything this page can talk about, in one list. Nothing here will ask you anything, and opening something does not change your answers.'));
     var q = el('label', 'kbq');
@@ -7563,7 +8021,7 @@ var PLATES = {
   /* ---------------- tabs and chrome ---------------- */
   function setTab(t) {
     clearChips();
-    S.tab = t; stopSpeak();
+    S.tab = t; stopSpeak(); paintLearn();
     $$('.tabs button').forEach(function (b) { b.setAttribute('aria-selected', b.getAttribute('data-tab') === t ? 'true' : 'false'); });
     $('#paneInputs').hidden = t !== 'inputs';
     $('#paneAdvisory').hidden = t !== 'advisory';
@@ -8038,7 +8496,7 @@ var PLATES = {
   });
   $('#bPrintChat').addEventListener('click', function () { window.print(); });
   /* any choice inside the menu closes it, or it sits open over the screen */
-  $$('.hmp .hmi').forEach(function (b) {
+  $$('#hMore .hmi, #hMore .hms').forEach(function (b) {
     b.addEventListener('click', function () {
       $('#hMore').classList.remove('on');
       $('#bMore').setAttribute('aria-expanded', 'false');
@@ -8293,7 +8751,7 @@ var PLATES = {
      education only. They appear only for a diagnosis that has them, the same
      rule the plates follow. */
   function paintTwins() {
-    var box = $('#hmTwin'), rule = $('#hmdTwin');
+    var box = $('#hmTwin'), rule = null;
     if (!box) { return; }
     $$('.hmi.ext', box).forEach(function (n) { n.remove(); });
     var twins = (S.cancer && typeof TWINS !== 'undefined') ? TWINS[S.cancer.id] : null;
@@ -8309,6 +8767,11 @@ var PLATES = {
       var a = el('a', 'hmi ext' + (t.page ? ' trp' : ''));
       a.href = t.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
       a.setAttribute('role', 'menuitem');
+      var ci = el('i', 'hmc');
+      ci.innerHTML = t.page
+        ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5"/></svg>'
+        : '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg>';
+      a.appendChild(ci);
       var tx = el('span', 'hmx');
       tx.appendChild(el('b', null, t.t));
       tx.appendChild(el('span', null, t.sub));
@@ -8521,7 +8984,7 @@ var PLATES = {
     research: [
       { id: 'find', t: 'Find trials that might fit', d: 'A search of the trial registry against what you have recorded.' },
       { id: 'nct', t: 'Ask about a specific trial', d: 'You have its number: NCT and eight digits.', nct: true },
-      { id: 'second', t: 'What the evidence says', d: 'A second look at what is published for a situation like this.' },
+      { id: 'second', t: 'New methods and research', d: 'What is being tried beyond the usual treatment, and what the evidence says so far.' },
       HP_OTHER]
   };
   var HP_ALT = { advocacy: 'Just show me the organizations', research: 'Just show me the trial groupings',
