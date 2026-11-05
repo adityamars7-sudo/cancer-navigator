@@ -3587,35 +3587,16 @@ html[data-quiet="1"] .toast{background:#33333B; color:var(--ink)}
      A wrong number at three in the morning is worse than no number. */
 
   /* =====================================================================
-     WORKED CASES. Each one is a full dossier on its own page: the order a
-     team considered, the published cohort behind every step, and where the
-     evidence runs out. There is exactly one today, and the offer says so
-     rather than implying a library.
+     WORKED CASES. A worked case is a full write-up on its own page: the
+     order a team considered, the published cohort behind every step, and
+     where the evidence runs out. There are none on file. The one there was
+     came from an outside dossier and was detached on 2026-11-05; the offer,
+     the button and the panel brief all stay dormant while this is empty.
 
-     `match` is field id to accepted answers. It is matched against what the
-     person actually recorded, never inferred: a case is offered because
-     their own answers line up with it, and the offer names which ones.
+     `match` is field id to accepted answers, matched against what the person
+     actually recorded, never inferred.
      ===================================================================== */
-  var CASES = [{
-    id: 'AOH-7K9X-M4Q2',
-    cancer: 'gbm',
-    t: 'Glioblastoma, DCVax-L and combination',
-    sub: 'A recurrent case, re-profiled, written up end to end',
-    url: 'https://openrx.aimonehealth.com/GBM-DCVax-L-Combination.html',
-    src: 'AiM One Health, open research',
-    /* carried from the dossier's own labelling, not softened */
-    limit: 'It is one illustrative case and it is not for clinical use. The survival figures in it are group results from published trials, which is not a prediction for any one person.',
-    match: {
-      idh:  { vals: ['wildtype'],   t: 'IDH-wildtype' },
-      mgmt: { vals: ['methylated'], t: 'MGMT methylated' },
-      egfr: { vals: ['pos'],        t: 'EGFR positive' }
-    },
-    holds: [
-      ['order', 'The order their team considered', 'Surgery, chemoradiation, the vaccine, maintenance, then a trial branch.'],
-      ['evidence', 'The study behind each step', 'Every arm names its published cohort, its own numbers and its own limits.'],
-      ['gap', 'Where the evidence runs out', 'One arm in that plan has no glioblastoma efficacy data at all, and the page says so.']
-    ]
-  }];
+  var CASES = [];
 
   /* =====================================================================
      THE TWO TWINS, on the clinician trainer. Both are education-only pages
@@ -3633,13 +3614,12 @@ html[data-quiet="1"] .toast{background:#33333B; color:var(--ink)}
     gbm: [
       { id: 'adaptive', t: 'Adaptive twin',
         sub: 'Evidence, person and time. Entering a scan result updates the outlook.',
-        url: 'https://openrx.aimonehealth.com/../' },
+        url: 'https://cancer.guidedcare.ai/adaptive-twin.html' },
       { id: 'pathway', t: 'Pathway twin',
         sub: 'The journey as a timeline. It opens from the trainer, which holds the case.',
         url: '' }
     ]
   };
-  TWINS.gbm[0].url = 'https://cancer.guidedcare.ai/adaptive-twin.html';
   TWINS.gbm[1].url = 'https://cancer.guidedcare.ai/gbm-idh-wildtype.html';
 
   /* =====================================================================
@@ -3674,52 +3654,22 @@ html[data-quiet="1"] .toast{background:#33333B; color:var(--ink)}
      these come from long term (a table the team writes, with a review step
      and an expiry date) is logged in BACKLOG.md.
 
-     Today there is one source, and every item below is taken from it: the
-     AiM One Health open research dossier for one glioblastoma case, read on
-     2026-11-04. Each item carries the dossier's own grade, put on one rung
-     of RLADDER, and a plain description written here. No figure is carried:
-     the numbers live on the dossier, next to the groups they come from, and
-     its projected "best case" curve is not shown anywhere in this page.
+     There is no source on file. The five items that were here all came from
+     one outside dossier and were detached on 2026-11-05, so the screen says
+     nothing has been written up and points at the trainer. A new item needs
+     a named, dated source in RSOURCE and a rung on RLADDER, and no figure.
      ===================================================================== */
   var RLADDER = [
     { id: 'lab', t: 'Lab only', d: 'Studied in cells or animals. Not yet tested in people with this cancer.' },
     { id: 'early', t: 'First human studies', d: 'Small early studies, mainly about safety and dose. Too early to know whether it helps.' },
-    /* "a trial enrolling now" was the first wording. DCVax-L has finished its
-       phase 3 trial, so "enrolling now" would be false; this rung is about
+    /* "a trial enrolling now" was the first wording. A treatment can finish its
+       phase 3 trial, and then "enrolling now" would be false; this rung is about
        the evidence, and whether a trial is open is a separate fact. */
     { id: 'trial', t: 'Tested in trials, not yet standard care', d: 'Tested in larger studies with published results, but not accepted as standard care.' },
     { id: 'standard', t: 'Standard care', d: 'Part of accepted treatment, backed by large randomized trials.' }
   ];
-  var RSOURCE = { t: 'Glioblastoma, DCVax-L and combination: an open research dossier',
-    by: 'AiM One Health', url: 'https://openrx.aimonehealth.com/GBM-DCVax-L-Combination.html', read: '2026-11-04',
-    note: 'Put together for one person’s tumor. It calls itself a ranked hypothesis for the team to weigh, not a treatment recommendation.' };
-  var RESEARCH = [
-    { id: 'resect', dx: ['gbm'], stage: 'standard', grade: 'Strong evidence',
-      t: 'Maximal safe surgery',
-      what: 'Surgery to take out as much of the tumor as can be removed safely.',
-      ev: 'Large studies comparing more and less complete removal support it, and it also gives the tissue some later treatments are made from.',
-      refs: ['Lacroix 2001, J Neurosurg', 'Brown 2016, JAMA Oncol'] },
-    { id: 'chemorad', dx: ['gbm'], stage: 'standard', grade: 'Strong evidence',
-      t: 'Radiation with temozolomide',
-      what: 'Radiation given with a chemotherapy pill, temozolomide, at the same time.',
-      ev: 'Standard since a large randomized trial in 2005. It helps most when the MGMT promoter is methylated.',
-      refs: ['Stupp 2005, NEJM', 'Hegi 2005, NEJM'], marks: ['MGMT promoter methylated'] },
-    { id: 'maint', dx: ['gbm'], stage: 'standard', grade: 'Strong evidence',
-      t: 'Temozolomide after radiation, with or without Tumor Treating Fields',
-      what: 'Temozolomide continued after radiation. Tumor Treating Fields is a device worn on the scalp that is added to it.',
-      ev: 'Adding Tumor Treating Fields was tested against temozolomide alone in a large randomized trial (EF-14).',
-      refs: ['Stupp 2017, JAMA (EF-14)'] },
-    { id: 'dcvax', dx: ['gbm'], stage: 'trial', grade: 'Moderate evidence',
-      t: 'DCVax-L, a vaccine made from the person’s own tumor',
-      what: 'Immune cells from the person’s blood are combined with their own tumor tissue and given back, to train the immune system against the tumor.',
-      ev: 'A phase 3 trial published results in 2023. It compared people with patients from other studies rather than with a randomized control group, which is weaker evidence. It is not standard care.',
-      refs: ['Liau 2023, JAMA Oncol'], marks: ['MGMT promoter methylated', 'EGFRvIII present'] },
-    { id: 'prmt5', dx: ['gbm'], stage: 'early', grade: 'Trial only',
-      t: 'PRMT5 inhibitors, for tumors that have lost MTAP',
-      what: 'A newer kind of targeted drug, aimed at tumors missing a gene called MTAP.',
-      ev: 'There are no results in glioblastoma yet. A drug of this kind has had a first study in people with other cancers. Whether it reaches the brain well enough is the open question.',
-      refs: ['Rodon 2024, Ann Oncol', 'ClinicalTrials.gov, PRMT5 trials in glioblastoma'], marks: ['MTAP deletion'] }
-  ];
+  var RSOURCE = null;
+  var RESEARCH = [];
 
   function trainerUrl(c) { return c && TRAINER[c.id] ? TRAINER_BASE + TRAINER[c.id] + '.html' : null; }
 
@@ -6920,7 +6870,7 @@ var PLATES = {
       p2.appendChild(el('p', null, 'Almost everything, which is normal this early. The first thing that settles anything is the diagnosis written on the pathology report.'));
     } else if (!c.full) {
       var np = el('p', null, 'This page only knows which results the options hang on for glioblastoma. For ' + c.n + ', ');
-      if (trainerUrl(c)) {
+      if (c && trainerUrl(c)) {
         np.appendChild(document.createTextNode('the trainer’s page lists the ones that matter: '));
         np.appendChild(trainerLink(c, 'open the full page'));
         np.appendChild(document.createTextNode('.'));
@@ -7084,9 +7034,9 @@ var PLATES = {
     var c = S.cancer;
     var mine = c ? RESEARCH.filter(function (r) { return r.dx.indexOf(c.id) !== -1; }) : [];
     var show = mine.length ? mine : (c ? [] : RESEARCH);
-    if (c && !mine.length) {
+    if (!show.length || !RSOURCE) {
       var e = el('div', 'rs-empty');
-      e.appendChild(el('b', null, 'Nothing has been written up for ' + c.n.replace(/,.*$/, '') + ' yet.'));
+      e.appendChild(el('b', null, 'Nothing has been written up' + (c ? ' for ' + c.n.replace(/,.*$/, '') : '') + ' yet.'));
       var ep = el('p', null, 'When research for it is published, it will be listed here, on the same ladder. ');
       if (trainerUrl(c)) {
         ep.appendChild(document.createTextNode('Until then, the trainer’s page for it carries the cited evidence on standard options: '));
@@ -7097,9 +7047,6 @@ var PLATES = {
       h.appendChild(e);
       return;
     }
-    if (!c) {
-      h.appendChild(el('p', 'rs-note', 'No diagnosis is chosen yet. What has been written up so far is about glioblastoma.'));
-    }
 
     /* where every item comes from, said before the items */
     var src = el('div', 'rs-src');
@@ -7109,9 +7056,7 @@ var PLATES = {
     sb.appendChild(document.createTextNode(', ' + RSOURCE.by + '. Read on ' + new Date(RSOURCE.read + 'T12:00:00').toLocaleDateString(undefined, { dateStyle: 'long' }) + '.'));
     src.appendChild(sb);
     src.appendChild(el('p', null, RSOURCE.note));
-    src.appendChild(el('p', 'rs-warn', 'The dossier itself shows survival figures. They are results for groups of people in published trials, '
-      + 'not a prediction for one person. It also draws a projected curve, which is a projection, not data. Neither is shown here.'));
-    var go = el('a', 'trn-go', 'Open the dossier');
+    var go = el('a', 'trn-go', 'Open the source');
     go.href = RSOURCE.url; go.target = '_blank'; go.rel = 'noopener noreferrer';
     go.insertAdjacentHTML('beforeend', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>');
     src.appendChild(go);
@@ -7137,7 +7082,7 @@ var PLATES = {
         cd.appendChild(ev);
         var meta = el('dl', 'rs-meta');
         function row(k, v) { meta.appendChild(el('dt', null, k)); meta.appendChild(el('dd', null, v)); }
-        row('The dossier’s grade', r.grade);
+        row('Grade of evidence', r.grade);
         if (r.marks) { row('Matched in that case to', r.marks.join(', ')); }
         row('Sources', r.refs.join('; '));
         cd.appendChild(meta);
