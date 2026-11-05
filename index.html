@@ -1690,6 +1690,57 @@ body.l-collapsed .rband{padding:12px 0 8px; margin-top:6px; justify-content:cent
 body.l-collapsed .rband span{display:none}
 body.l-collapsed .rband::before{flex:0 0 8px; height:8px}
 
+/* The step number and the status word are drawn by Navigator Navy only. */
+.sno,.spill{display:none}
+/* Navigator Navy draws the rail as the patient app does (screenshots of
+   2026-11-05): a white card, the case as a serif title over a rule, round
+   nodes on a thin navy line, a number in each node not yet finished and a
+   check in each finished one, the title in full ink, a status word under it,
+   the description always shown, and the row you are on a pale blue block.
+   The collapsed rail keeps its icons, because a number alone says less. */
+:root[data-theme="navy"] .lt{background:var(--paper)}
+:root[data-theme="navy"] .casecard{background:none; border:0; border-bottom:1px solid var(--line); border-radius:0;
+  padding:4px 6px 15px; margin-bottom:12px; align-items:flex-start}
+:root[data-theme="navy"] .casecard:hover{background:none}
+:root[data-theme="navy"] .casecard:hover .cc-tx b{text-decoration:underline; text-underline-offset:3px}
+:root[data-theme="navy"] body:not(.l-collapsed) .cc-ic{display:none}
+:root[data-theme="navy"] .cc-tx b{font-family:var(--head); font-size:calc(15.6px * var(--step)); font-weight:700;
+  color:var(--ink); white-space:normal; line-height:1.3; letter-spacing:-.005em}
+:root[data-theme="navy"] .cc-tx span{font-size:calc(11.6px * var(--step)); color:var(--ink3); margin-top:4px; white-space:normal}
+:root[data-theme="navy"] .cc-go{margin-top:3px}
+:root[data-theme="navy"] .lth h2{color:var(--ink3); font-size:calc(10.6px * var(--step)); letter-spacing:.1em; font-weight:700}
+:root[data-theme="navy"] .rband{color:var(--ink3); font-size:calc(10px * var(--step)); letter-spacing:.09em; font-weight:700}
+:root[data-theme="navy"] .srow{align-items:flex-start; gap:14px; padding:10px 10px 11px; border-radius:10px}
+:root[data-theme="navy"] .srow:hover{background:var(--brand-t2)}
+:root[data-theme="navy"] .step.at .srow{background:var(--rail-pill); box-shadow:none}
+:root[data-theme="navy"] .step.at .srow::before{display:none}
+:root[data-theme="navy"] .snum{flex:0 0 28px; height:28px; background:var(--paper); border:1.5px solid var(--line); color:var(--ink3)}
+:root[data-theme="navy"] .srow:hover .snum{background:var(--paper); border-color:var(--brand); color:var(--brand-ink)}
+:root[data-theme="navy"] .step.done .snum{background-color:var(--done); background-image:none; border-color:var(--done); color:var(--on-fill)}
+:root[data-theme="navy"] .step.at .snum,:root[data-theme="navy"] .step.at.done .snum{background-color:var(--live); background-image:none;
+  border-color:var(--live); color:var(--on-fill)}
+:root[data-theme="navy"] body:not(.l-collapsed) .step:not(.done) .snum svg{display:none}
+:root[data-theme="navy"] body:not(.l-collapsed) .sno{display:block; font-style:normal; font-weight:760;
+  font-size:calc(12.4px * var(--step)); line-height:1; font-variant-numeric:tabular-nums}
+:root[data-theme="navy"] .snum svg{width:14px; height:14px}
+:root[data-theme="navy"] body.l-collapsed .snum{flex:0 0 42px; height:42px; border-radius:50%}
+:root[data-theme="navy"] body.l-collapsed .snum svg{width:21px; height:21px}
+:root[data-theme="navy"] .gtrack,:root[data-theme="navy"] .gfill,:root[data-theme="navy"] .gnow{width:3px; border-radius:3px}
+:root[data-theme="navy"] body.l-collapsed .gtrack,:root[data-theme="navy"] body.l-collapsed .gfill,
+:root[data-theme="navy"] body.l-collapsed .gnow{width:4px}
+:root[data-theme="navy"] .sname{padding-top:4px}
+:root[data-theme="navy"] .sname b,:root[data-theme="navy"] .step.done .sname b,
+:root[data-theme="navy"] .step.at .sname b,:root[data-theme="navy"] .step.at.done .sname b{color:var(--ink); font-weight:650;
+  font-size:calc(13.2px * var(--step))}
+:root[data-theme="navy"] .sname span{max-height:none; opacity:1; margin-top:5px; font-size:calc(11.6px * var(--step));
+  line-height:1.45; color:var(--ink3)}
+:root[data-theme="navy"] .spill{display:table; margin-top:6px; padding:2px 8px; border-radius:6px; font-style:normal;
+  font-size:calc(10.6px * var(--step)); font-weight:700; line-height:1.4; background:var(--sunk); color:var(--ink2)}
+:root[data-theme="navy"] .spill.now{background:var(--brand-d); color:var(--on-fill)}
+/* the count stays in the markup (and the panel header says where you are), but the patient app draws no badge */
+:root[data-theme="navy"] .smeta{display:none}
+:root[data-theme="navy"] .sub{padding-left:52px}
+
 /* plates: the printed pages, shown as pages */
 .fc.plate{padding:0; border:0; background:transparent; margin-bottom:14px}
 .fc.plate figure{margin:0; position:relative; border:1px solid var(--line); border-radius:16px;
@@ -6473,9 +6524,16 @@ var PLATES = {
       row.title = 'Step ' + s.n + ' of 12 · ' + s.t;
       var num = el('span', 'snum');
       num.innerHTML = full ? solid('tick', 15) : solid(s.art, 15);
+      /* the step number, which only Navigator Navy draws, in the node of a
+         step not yet finished; every other theme keeps the icon */
+      if (!full) { num.appendChild(el('em', 'sno', String(s.n))); }
       row.appendChild(num);
       var nm = el('span', 'sname');
       nm.appendChild(el('b', null, s.t));
+      /* a status word, also only drawn by Navigator Navy: where you are, or
+         that a step is behind you. Never a count of what is left. */
+      if (i === S.step) { nm.appendChild(el('i', 'spill now', 'You are here')); }
+      else if (full) { nm.appendChild(el('i', 'spill', s.reads ? 'Seen' : 'Answered')); }
       nm.appendChild(el('span', null, s.b));
       row.appendChild(nm);
       if (i === S.step) {
