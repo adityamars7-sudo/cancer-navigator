@@ -1732,8 +1732,9 @@ body.l-collapsed .rband::before{flex:0 0 8px; height:8px}
 :root[data-theme="navy"] .sname b,:root[data-theme="navy"] .step.done .sname b,
 :root[data-theme="navy"] .step.at .sname b,:root[data-theme="navy"] .step.at.done .sname b{color:var(--ink); font-weight:650;
   font-size:calc(13.2px * var(--step))}
-:root[data-theme="navy"] .sname span{max-height:none; opacity:1; margin-top:5px; font-size:calc(11.6px * var(--step));
-  line-height:1.45; color:var(--ink3)}
+/* the description waits for the pointer here too, as in every theme */
+:root[data-theme="navy"] .sname span{font-size:calc(11.6px * var(--step)); line-height:1.45; color:var(--ink3)}
+:root[data-theme="navy"] .srow:hover .sname span,:root[data-theme="navy"] .srow:focus-visible .sname span{margin-top:5px}
 :root[data-theme="navy"] .spill{display:table; margin-top:6px; padding:2px 8px; border-radius:6px; font-style:normal;
   font-size:calc(10.6px * var(--step)); font-weight:700; line-height:1.4; background:var(--sunk); color:var(--ink2)}
 :root[data-theme="navy"] .spill.now{background:var(--brand-d); color:var(--on-fill)}
